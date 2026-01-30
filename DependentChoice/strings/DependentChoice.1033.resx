@@ -125,6 +125,30 @@
     <value>A Power Apps Component Framework (PCF) control for dynamic filtering of dependent choice fields. Automatically filters available options based on parent field selections, supporting hierarchical data relationships in Dynamics 365 and Power Apps model-driven apps.</value>
     <comment/>
   </data>
+  <data name="dependentChoice_Display_Key" xml:space="preserve">
+    <value>Dependent Choice Field</value>
+    <comment>The choice field that will be filtered based on the parent selection</comment>
+  </data>
+  <data name="dependentChoice_Desc_Key" xml:space="preserve">
+    <value>Bind to the dependent choice or multi-select choice field that should display filtered options based on the parent field value. This field's available options will be dynamically restricted according to the configuration mapping.</value>
+    <comment/>
+  </data>
+  <data name="parentChoice_Display_Key" xml:space="preserve">
+    <value>Parent Choice Field</value>
+    <comment>The parent choice field that controls the filtering</comment>
+  </data>
+  <data name="parentChoice_Desc_Key" xml:space="preserve">
+    <value>Bind to the parent choice or multi-select choice field that determines which options are available in the dependent field. When this field's value changes, the dependent field options will be filtered accordingly.</value>
+    <comment/>
+  </data>
+  <data name="configurationParameters_Display_Key" xml:space="preserve">
+    <value>Configuration (JSON)</value>
+    <comment>JSON configuration for parent-to-dependent mappings</comment>
+  </data>
+  <data name="configurationParameters_Desc_Key" xml:space="preserve">
+    <value>JSON configuration defining the mapping between parent values and allowed dependent values. Format: {"mappings":[{"parentValue":1,"dependentValues":[10,20,30]}]}. Each mapping specifies which dependent options are available for each parent value.</value>
+    <comment/>
+  </data>
   <data name="dependent-choice-select-text" xml:space="preserve">
     <value>--Select--</value>
     <comment/>
