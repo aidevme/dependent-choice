@@ -1,0 +1,43 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": [
+    "./DependentChoice/index.ts",
+    "./DependentChoice/DependentChoiceApp.tsx",
+    "./DependentChoice/components/DependentChoice.tsx",
+    "./DependentChoice/services/ChoiceService/ChoiceService.ts",
+    "./DependentChoice/services/DependencyMappingService/DependencyMappingService.ts",
+    "./DependentChoice/services/PcfContextService/PcfContextService.ts"
+  ],
+  "out": "docs/api",
+  "plugin": ["typedoc-plugin-markdown"],
+  "entryPointStrategy": "expand",
+  "excludeExternals": true,
+  "excludePrivate": true,
+  "excludeProtected": false,
+  "excludeInternal": false,
+  "readme": "README.md",
+  "name": "Dependent Choice PCF Control API Documentation",
+  "includeVersion": true,
+  "sort": ["source-order"],
+  "kindSortOrder": [
+    "Class",
+    "Interface",
+    "Function",
+    "TypeAlias",
+    "Variable"
+  ],
+  "categoryOrder": [
+    "Components",
+    "Services",
+    "Interfaces",
+    "*"
+  ],
+  "navigation": {
+    "includeCategories": true,
+    "includeGroups": true
+  },
+  "gitRevision": "master",
+  "githubPages": false,
+  "hideGenerator": false,
+  "searchInComments": true
+}

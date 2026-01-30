@@ -2,6 +2,7 @@ import eslintjs from "@eslint/js";
 import microsoftPowerApps from "@microsoft/eslint-plugin-power-apps";
 import pluginPromise from "eslint-plugin-promise";
 import reactPlugin from "eslint-plugin-react";
+import tsdoc from "eslint-plugin-tsdoc";
 import globals from "globals";
 import typescriptEslint from "typescript-eslint";
 
@@ -19,6 +20,7 @@ export default [
   {
     plugins: {
       "@microsoft/power-apps": microsoftPowerApps,
+      tsdoc,
     },
 
     languageOptions: {
@@ -36,6 +38,7 @@ export default [
 
     rules: {
       "@typescript-eslint/no-unused-vars": "off",
+      "tsdoc/syntax": "warn",
     },
     settings: {
       react: {

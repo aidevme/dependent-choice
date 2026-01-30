@@ -21,3 +21,6 @@
 
 # macos
 .DS_Store
+
+# generated documentation
+/docs/api
