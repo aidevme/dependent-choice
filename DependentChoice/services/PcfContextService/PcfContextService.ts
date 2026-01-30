@@ -71,6 +71,38 @@ export class PcfContextService {
     return this.context.mode.isVisible;
   }
 
+  /**
+   * Check if the dependent choice field has field-level security enabled
+   * @returns true if field has security applied
+   */
+  public isFieldSecured(): boolean {
+    return this.context.parameters.dependentChoice?.security?.secured ?? false;
+  }
+
+  /**
+   * Check if the current user can read the dependent choice field value
+   * @returns true if user has read permission
+   */
+  public canReadField(): boolean {
+    return this.context.parameters.dependentChoice?.security?.readable ?? true;
+  }
+
+  /**
+   * Check if the current user can edit the dependent choice field
+   * @returns true if user has edit permission
+   */
+  public canEditField(): boolean {
+    return this.context.parameters.dependentChoice?.security?.editable ?? true;
+  }
+
+  /**
+   * Check if the control is editable (not disabled and user has edit permission)
+   * @returns true if control can be edited by current user
+   */
+  public isControlEditable(): boolean {
+    return !this.isControlDisabled() && this.canEditField();
+  }
+
   public getTheme(): Theme {
     const defaultTheme: Theme = this.context.fluentDesignLanguage?.tokenTheme as Theme;
     return this.isControlDisabled() && !this.isCanvasApp()

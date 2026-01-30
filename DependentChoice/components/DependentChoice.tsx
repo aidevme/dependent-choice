@@ -25,8 +25,8 @@ export const DependentChoiceControl: React.FC<IDependentChoiceAppProps> = (
   if (!pcfContext.isVisible()) return <></>;
 
   const isMultiSelect = props.isMultiSelect;
-  // Determine disabled state from context.
-  const isDisabled = pcfContext.isControlDisabled();
+  // Determine disabled state from context (disabled or user lacks edit permission).
+  const isDisabled = !pcfContext.isControlEditable();
   
   // Get localized select text
   const selectText = props.context.resources.getString("dependent-choice-select-text");
