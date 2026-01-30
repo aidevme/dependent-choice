@@ -1,6 +1,6 @@
 {
   "mappings": [
-    {
+     {
       "parentValue": 1,
       "dependentValues": [11, 12, 13]
     },
