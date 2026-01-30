@@ -1,0 +1,57 @@
+name: Build PCF Control
+
+on:
+  push:
+    branches: [ master, main, develop ]
+  pull_request:
+    branches: [ master, main, develop ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build and Lint
+    runs-on: windows-latest
+    
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x]
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Run ESLint
+      run: npm run lint
+      continue-on-error: false
+      
+    - name: Build PCF control
+      run: npm run build
+      
+    - name: Upload build artifacts
+      if: matrix.node-version == '18.x'
+      uses: actions/upload-artifact@v4
+      with:
+        name: pcf-control-build
+        path: |
+          out/
+          !out/**/*.map
+        retention-days: 30
+        
+    - name: Check for build warnings
+      if: always()
+      run: |
+        if (Test-Path "out/controls/DependentChoice.js") {
+          Write-Host "✓ Build successful - DependentChoice.js created"
+        } else {
+          Write-Error "✗ Build failed - output files not found"
+          exit 1
+        }
