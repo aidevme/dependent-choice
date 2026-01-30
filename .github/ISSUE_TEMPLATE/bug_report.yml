@@ -1,0 +1,157 @@
+name: Bug Report
+description: Report a bug or unexpected behavior
+title: "[Bug]: "
+labels: ["bug", "triage"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! Please fill out the form below with as much detail as possible.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of what the bug is.
+      placeholder: Describe the bug...
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Steps to reproduce the behavior
+      placeholder: |
+        1. Go to '...'
+        2. Click on '...'
+        3. Select '...'
+        4. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What you expected to happen
+      placeholder: Describe what should happen...
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happened
+      placeholder: Describe what actually happened...
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Control Version
+      description: Which version of the DependentChoice control are you using?
+      placeholder: e.g., 0.0.3
+    validations:
+      required: true
+
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Environment Type
+      description: What type of Power Apps environment?
+      options:
+        - Production
+        - Sandbox
+        - Trial
+        - Developer
+    validations:
+      required: true
+
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      description: Which browser are you using?
+      options:
+        - Microsoft Edge
+        - Google Chrome
+        - Mozilla Firefox
+        - Safari
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: browser-version
+    attributes:
+      label: Browser Version
+      description: What version of the browser?
+      placeholder: e.g., Chrome 120, Edge 121
+
+  - type: dropdown
+    id: option-type
+    attributes:
+      label: Option Set Type
+      description: Which type of option set?
+      options:
+        - Single-select (OptionSet)
+        - Multi-select (MultiSelectOptionSet)
+        - Both
+        - Not applicable
+    validations:
+      required: true
+
+  - type: textarea
+    id: configuration
+    attributes:
+      label: Configuration
+      description: Your configurationParameters JSON (remove sensitive data)
+      placeholder: |
+        {
+          "mappings": [
+            {
+              "parentValue": 1,
+              "dependentValues": [100, 101, 102]
+            }
+          ]
+        }
+      render: json
+
+  - type: textarea
+    id: console-logs
+    attributes:
+      label: Console Logs
+      description: Any relevant browser console errors or warnings
+      placeholder: Paste console output here...
+      render: shell
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: If applicable, add screenshots to help explain the problem
+      placeholder: Drag and drop images here...
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Any other context about the problem
+      placeholder: Add any other context here...
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Pre-submission Checklist
+      description: Please verify before submitting
+      options:
+        - label: I have searched for existing issues
+          required: true
+        - label: I am using the latest version of the control
+          required: false
+        - label: I have included console logs (if applicable)
+          required: false
