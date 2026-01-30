@@ -59,12 +59,15 @@
 <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 </resheader>
 <data name="Control_Display_Name_Key" xml:space="preserve">
-    <value>Control Name</value>
+    <value>Abhängige Auswahlsteuerung</value>
+    <comment/>
 </data>
 <data name="Control_Description_Key" xml:space="preserve">
-    <value>Control Description</value>
+    <value>Ein Power Apps Component Framework (PCF)-Steuerelement zur dynamischen Filterung abhängiger Auswahlfelder. Filtert automatisch verfügbare Optionen basierend auf der Auswahl des übergeordneten Felds und unterstützt hierarchische Datenbeziehungen in Dynamics 365 und Power Apps Model-Driven-Apps.</value>
+    <comment/>
 </data>
 <data name="dependent-choice-select-text" xml:space="preserve">
     <value>--Auswählen--</value>
+    <comment/>
 </data>
 </root>

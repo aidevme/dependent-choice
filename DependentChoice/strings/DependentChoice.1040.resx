@@ -59,12 +59,15 @@
 <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 </resheader>
 <data name="Control_Display_Name_Key" xml:space="preserve">
-    <value>Control Name</value>
+    <value>Controllo Scelta Dipendente</value>
+    <comment/>
 </data>
 <data name="Control_Description_Key" xml:space="preserve">
-    <value>Control Description</value>
+    <value>Un controllo Power Apps Component Framework (PCF) per il filtraggio dinamico dei campi di scelta dipendenti. Filtra automaticamente le opzioni disponibili in base alle selezioni del campo principale, supportando relazioni di dati gerarchiche in Dynamics 365 e app Power Apps basate su modelli.</value>
+    <comment/>
 </data>
 <data name="dependent-choice-select-text" xml:space="preserve">
     <value>--Seleziona--</value>
+    <comment/>
 </data>
 </root>
