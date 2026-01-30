@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <manifest>
-  <control namespace="AIDEVME.CRM.Pcf" constructor="DependentChoice" version="0.0.3" display-name-key="DependentChoice" description-key="DependentChoice description" control-type="virtual">
+  <control namespace="AIDEVME.CRM.Pcf" constructor="DependentChoice" version="0.0.3" display-name-key="Control_Display_Name_Key" description-key="Control_Description_Key" control-type="virtual">
     <external-service-usage enabled="false" />
     <property name="dependentChoice" display-name-key="dependentChoice_Display_Key" description-key="dependentChoice_Desc_Key" of-type-group="choiceTypes" usage="bound" required="true" />
     <property name="parentChoice" display-name-key="parentChoice_Display_Key" description-key="parentChoice_Desc_Key" of-type-group="choiceTypes" usage="bound" required="true" />
