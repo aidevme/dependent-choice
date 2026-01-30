@@ -2,8 +2,8 @@
 <manifest>
   <control namespace="AIDEVME.CRM.Pcf" constructor="DependentChoice" version="0.0.4" display-name-key="Control_Display_Name_Key" description-key="Control_Description_Key" control-type="virtual">
     <external-service-usage enabled="false" />
-    <property name="dependentChoice" display-name-key="dependentChoice_Display_Key" description-key="dependentChoice_Desc_Key" of-type-group="choiceTypes" usage="bound" required="true" />
     <property name="parentChoice" display-name-key="parentChoice_Display_Key" description-key="parentChoice_Desc_Key" of-type-group="choiceTypes" usage="bound" required="true" />
+    <property name="dependentChoice" display-name-key="dependentChoice_Display_Key" description-key="dependentChoice_Desc_Key" of-type-group="choiceTypes" usage="bound" required="true" />
     <property name="configurationParameters" display-name-key="configurationParameters_Display_Key" description-key="configurationParameters_Desc_Key" of-type="Multiple" usage="input" />
     <type-group name="choiceTypes">
       <type>OptionSet</type>

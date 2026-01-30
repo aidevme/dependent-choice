@@ -79,9 +79,19 @@ export class DependentChoice implements ComponentFramework.ReactControl<IInputs,
         console.log("Is MultiSelect:", this.isMultiSelect);
 
         // Get and log parentChoice value
+        // For multi-select, raw is an array of numbers
+        // For single select, raw is a single number (or has _val property)
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-        const parentChoiceValue = context.parameters.parentChoice.raw?._val ?? context.parameters.parentChoice.raw;
-        console.log("Parent Choice Value:", parentChoiceValue);
+        let parentChoiceValue = context.parameters.parentChoice.raw;
+        
+        // Check if it's a single select with _val property
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        if (parentChoiceValue?._val !== undefined) {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+            parentChoiceValue = parentChoiceValue._val;
+        }
+        
+        console.log("Parent Choice Value:", parentChoiceValue, "IsArray:", Array.isArray(parentChoiceValue));
         // @ts-expect-error this is defined
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const parentChoiceOptions = context.parameters.parentChoice.attributes?.Options;
