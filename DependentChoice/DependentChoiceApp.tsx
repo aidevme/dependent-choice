@@ -29,6 +29,11 @@ export const DependentChoiceApp: React.FC<IDependentChoiceAppProps> = (props) =>
   // Use webLightTheme when running locally (in design mode), otherwise use the context theme
   const theme = pcfContextService.inDesignMode() ? webLightTheme : pcfContextService.theme;
 
+  // Don't render the control if it's not visible
+  if (!pcfContextService.isVisible()) {
+    return null;
+  }
+
   return (
     <PcfContextProvider pcfcontext={pcfContextService}>
       <IdPrefixProvider value={`app-${props.instanceid}-`}>
