@@ -10,7 +10,7 @@ import type { DropdownProps } from "@fluentui/react-components";
 import { useDependentChoiceStyles } from "../styles/Styles"
 import { IDependentChoiceAppProps } from "../DependentChoiceApp";
 
-interface IOption {
+interface IDependentChoiceOption {
   key: string | number;
   text: string;  
 }
@@ -61,7 +61,7 @@ export const DependentChoiceControl: React.FC<IDependentChoiceAppProps> = (
   }, [props.currentValue, isMultiSelect]);
 
   // Map the options using the information passed from the index.
-  const mappedOptions: IOption[] = props.options.map((opt) => ({
+  const mappedOptions: IDependentChoiceOption[] = props.options.map((opt) => ({
     key: opt.Value,
     text: opt.Label,    
   }));
@@ -131,7 +131,7 @@ export const DependentChoiceControl: React.FC<IDependentChoiceAppProps> = (
       isMultiSelect, selectedKey, selectedKeys]);
 
   // Add the --Select-- option if conditions are met
-  const selectOption: IOption = { key: -1, text: selectText };
+  const selectOption: IDependentChoiceOption = { key: -1, text: selectText };
   const includeSelectOption = !props.isMultiSelect && !props.defaultValue;
 
   // Determine which options to display:
