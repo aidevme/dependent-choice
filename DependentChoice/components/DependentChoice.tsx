@@ -12,7 +12,8 @@ import { IDependentChoiceAppProps } from "../DependentChoiceApp";
 
 interface IDependentChoiceOption {
   key: string | number;
-  text: string;  
+  text: string;
+  hidden?: boolean;
 }
 
 export const DependentChoiceControl: React.FC<IDependentChoiceAppProps> = (
