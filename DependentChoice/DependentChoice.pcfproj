@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.PowerPlatform.PowerApps.Sdk/1.*">
+  <PropertyGroup>
+    <PowerAppsTargetsPath>$(MSBuildExtensionsPath)\Microsoft\PowerPlatform\PowerApps</PowerAppsTargetsPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.PowerApps.MSBuild.Pcf" Version="1.*" />
+    <PackageReference Include="Microsoft.PowerPlatform.PowerApps.Sdk" Version="1.*" />
+  </ItemGroup>
+</Project>
