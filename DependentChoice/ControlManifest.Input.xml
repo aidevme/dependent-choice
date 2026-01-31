@@ -1,27 +1,41 @@
-﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <manifest>
   <control namespace="AIDEVME.CRM.Pcf" constructor="DependentChoice" version="0.0.11" display-name-key="Control_Display_Name_Key" description-key="Control_Description_Key" control-type="virtual">
-    <external-service-usage enabled="false" />
-    <property name="dependentChoice" display-name-key="dependentChoice_Display_Key" description-key="dependentChoice_Desc_Key" of-type-group="choiceTypes" usage="bound" required="true" />
-    <property name="parentChoice" display-name-key="parentChoice_Display_Key" description-key="parentChoice_Desc_Key" of-type-group="choiceTypes" usage="bound" required="true" />
-    
-    <property name="configurationParameters" display-name-key="configurationParameters_Display_Key" description-key="configurationParameters_Desc_Key" of-type="Multiple" usage="input" />
+    <external-service-usage enabled="false"/>
+    <property name="dependentChoice" display-name-key="dependentChoice_Display_Key" description-key="dependentChoice_Desc_Key" of-type-group="choiceTypes" usage="bound" required="true"/>
+    <property name="parentChoice" display-name-key="parentChoice_Display_Key" description-key="parentChoice_Desc_Key" of-type-group="choiceTypes" usage="bound" required="true"/>
+    <property name="configurationParameters" display-name-key="configurationParameters_Display_Key" description-key="configurationParameters_Desc_Key" of-type="Multiple" usage="input"/>
     <type-group name="choiceTypes">
       <type>OptionSet</type>
       <type>MultiSelectOptionSet</type>
     </type-group>
     <resources>
-      <code path="index.ts" order="1" />
-      <platform-library name="React" version="16.14.0" />
-      <platform-library name="Fluent" version="9.46.2" />
-      <resx path="strings/DependentChoice.1033.resx" version="1.0.0" />
-      <resx path="strings/DependentChoice.1031.resx" version="1.0.0" />
-      <resx path="strings/DependentChoice.1036.resx" version="1.0.0" />
-      <resx path="strings/DependentChoice.1040.resx" version="1.0.0" />
+      <code path="index.ts" order="1"/>
+      <platform-library name="React" version="16.14.0"/>
+      <platform-library name="Fluent" version="9.46.2"/>
+      <resx path="strings/DependentChoice.1033.resx" version="1.0.0"/>
+      <resx path="strings/DependentChoice.1031.resx" version="1.0.0"/>
+      <resx path="strings/DependentChoice.1036.resx" version="1.0.0"/>
+      <resx path="strings/DependentChoice.1040.resx" version="1.0.0"/>
+      <resx path="strings/DependentChoice.3082.resx" version="1.0.0"/>
+      <resx path="strings/DependentChoice.2070.resx" version="1.0.0"/>
+      <resx path="strings/DependentChoice.1053.resx" version="1.0.0"/>
+      <resx path="strings/DependentChoice.1030.resx" version="1.0.0"/>
+      <resx path="strings/DependentChoice.1032.resx" version="1.0.0"/>
+      <resx path="strings/DependentChoice.1029.resx" version="1.0.0"/>
+      <resx path="strings/DependentChoice.1051.resx" version="1.0.0"/>
+      <resx path="strings/DependentChoice.1049.resx" version="1.0.0"/>
+      <resx path="strings/DependentChoice.1058.resx" version="1.0.0"/>
+      <resx path="strings/DependentChoice.1045.resx" version="1.0.0"/>
+      <resx path="strings/DependentChoice.1038.resx" version="1.0.0"/>
+      <resx path="strings/DependentChoice.1066.resx" version="1.0.0"/>
+      <resx path="strings/DependentChoice.1042.resx" version="1.0.0"/>
+      <resx path="strings/DependentChoice.1041.resx" version="1.0.0"/>
+      <resx path="strings/DependentChoice.4.resx" version="1.0.0"/>
     </resources>
     <feature-usage>
-      <uses-feature name="Utility" required="true" />
-      <uses-feature name="WebAPI" required="true" />
+      <uses-feature name="Utility" required="true"/>
+      <uses-feature name="WebAPI" required="true"/>
     </feature-usage>
   </control>
 </manifest>

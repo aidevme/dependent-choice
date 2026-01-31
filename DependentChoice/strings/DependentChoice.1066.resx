@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+<xsd:schema id="root" xmlns="" xmlns:xsd="https://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+<xsd:import namespace="https://www.w3.org/XML/1998/namespace" />
+<xsd:element name="root" msdata:IsDataSet="true">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded">
+  <xsd:element name="metadata">
+	<xsd:complexType>
+	  <xsd:sequence>
+		<xsd:element name="value" type="xsd:string" minOccurs="0" />
+	  </xsd:sequence>
+	  <xsd:attribute name="name" use="required" type="xsd:string" />
+	  <xsd:attribute name="type" type="xsd:string" />
+	  <xsd:attribute name="mimetype" type="xsd:string" />
+	  <xsd:attribute ref="xml:space" />
+	</xsd:complexType>
+  </xsd:element>
+  <xsd:element name="assembly">
+	<xsd:complexType>
+	  <xsd:attribute name="alias" type="xsd:string" />
+	  <xsd:attribute name="name" type="xsd:string" />
+	</xsd:complexType>
+  </xsd:element>
+  <xsd:element name="data">
+	<xsd:complexType>
+	  <xsd:sequence>
+		<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+		<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+	  </xsd:sequence>
+	  <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+	  <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+	  <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+	  <xsd:attribute ref="xml:space" />
+	</xsd:complexType>
+  </xsd:element>
+  <xsd:element name="resheader">
+	<xsd:complexType>
+	  <xsd:sequence>
+		<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+	  </xsd:sequence>
+	  <xsd:attribute name="name" type="xsd:string" use="required" />
+	</xsd:complexType>
+  </xsd:element>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:schema>
+<resheader name="resmimetype">
+<value>text/microsoft-resx</value>
+</resheader>
+<resheader name="version">
+<value>2.0</value>
+</resheader>
+<resheader name="reader">
+<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+</resheader>
+<resheader name="writer">
+<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+</resheader>
+<data name="Control_Display_Name_Key" xml:space="preserve">
+    <value>Điều khiển lựa chọn phụ thuộc</value>
+    <comment/>
+</data>
+<data name="Control_Description_Key" xml:space="preserve">
+    <value>Một điều khiển Power Apps Component Framework (PCF) để lọc động các trường lựa chọn phụ thuộc. Tự động lọc các tùy chọn khả dụng dựa trên lựa chọn của trường cha, hỗ trợ mối quan hệ dữ liệu phân cấp trong Dynamics 365 và các ứng dụng Power Apps điều khiển bằng mô hình.</value>
+    <comment/>
+</data>
+<data name="dependentChoice_Display_Key" xml:space="preserve">
+    <value>Trường lựa chọn phụ thuộc</value>
+    <comment>The choice field that will be filtered based on the parent selection</comment>
+</data>
+<data name="dependentChoice_Desc_Key" xml:space="preserve">
+    <value>Liên kết với trường lựa chọn phụ thuộc hoặc lựa chọn nhiều lần cần hiển thị các tùy chọn đã lọc dựa trên giá trị của trường cha. Các tùy chọn khả dụng của trường này sẽ được giới hạn động theo á nh xạ cấu hình.</value>
+    <comment/>
+</data>
+<data name="parentChoice_Display_Key" xml:space="preserve">
+    <value>Trường lựa chọn cha</value>
+    <comment>The parent choice field that controls the filtering</comment>
+</data>
+<data name="parentChoice_Desc_Key" xml:space="preserve">
+    <value>Liên kết với trường lựa chọn cha hoặc lựa chọn nhiều lần xác định những tùy chọn nào khả dụng trong trường phụ thuộc. Khi giá trị của trường này thay đổi, các tùy chọn của trường phụ thuộc sẽ được lọc tương ứng.</value>
+    <comment/>
+</data>
+<data name="configurationParameters_Display_Key" xml:space="preserve">
+    <value>Cấu hình (JSON)</value>
+    <comment>JSON configuration for parent-to-dependent mappings</comment>
+</data>
+<data name="configurationParameters_Desc_Key" xml:space="preserve">
+    <value>Cấu hình JSON xác định ánh xạ giữa các giá trị cha và các giá trị phụ thuộc được phép. Định dạng: {"mappings":[{"parentValue":1,"dependentValues":[10,20,30]}]}. Mỗi ánh xạ chỉ định những tùy chọn phụ thuộc nào khả dụng cho mỗi giá trị cha.</value>
+    <comment/>
+</data>
+<data name="dependent-choice-select-text" xml:space="preserve">
+    <value>--Chọn--</value>
+    <comment/>
+</data>
+<data name="dependent-choice-configuration-error-dialog-title" xml:space="preserve">
+    <value>Lỗi cấu hình</value>
+    <comment>Title for the configuration error dialog</comment>
+</data>
+<data name="dependent-choice-configuration-error-dialog-message" xml:space="preserve">
+    <value>Tham số cấu hình không hợp lệ:</value>
+    <comment>Error message shown when configuration is invalid</comment>
+</data>
+<data name="dependent-choice-configuration-error-dialog-expected-format-label" xml:space="preserve">
+    <value>Định dạng dự kiến:</value>
+    <comment>Label for the expected JSON format example</comment>
+</data>
+<data name="dependent-choice-configuration-error-dialog-ok-button" xml:space="preserve">
+    <value>OK</value>
+    <comment>OK button text for the error dialog</comment>
+</data>
+</root>

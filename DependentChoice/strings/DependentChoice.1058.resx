@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+<xsd:schema id="root" xmlns="" xmlns:xsd="https://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+<xsd:import namespace="https://www.w3.org/XML/1998/namespace" />
+<xsd:element name="root" msdata:IsDataSet="true">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded">
+  <xsd:element name="metadata">
+	<xsd:complexType>
+	  <xsd:sequence>
+		<xsd:element name="value" type="xsd:string" minOccurs="0" />
+	  </xsd:sequence>
+	  <xsd:attribute name="name" use="required" type="xsd:string" />
+	  <xsd:attribute name="type" type="xsd:string" />
+	  <xsd:attribute name="mimetype" type="xsd:string" />
+	  <xsd:attribute ref="xml:space" />
+	</xsd:complexType>
+  </xsd:element>
+  <xsd:element name="assembly">
+	<xsd:complexType>
+	  <xsd:attribute name="alias" type="xsd:string" />
+	  <xsd:attribute name="name" type="xsd:string" />
+	</xsd:complexType>
+  </xsd:element>
+  <xsd:element name="data">
+	<xsd:complexType>
+	  <xsd:sequence>
+		<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+		<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+	  </xsd:sequence>
+	  <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+	  <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+	  <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+	  <xsd:attribute ref="xml:space" />
+	</xsd:complexType>
+  </xsd:element>
+  <xsd:element name="resheader">
+	<xsd:complexType>
+	  <xsd:sequence>
+		<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+	  </xsd:sequence>
+	  <xsd:attribute name="name" type="xsd:string" use="required" />
+	</xsd:complexType>
+  </xsd:element>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:schema>
+<resheader name="resmimetype">
+<value>text/microsoft-resx</value>
+</resheader>
+<resheader name="version">
+<value>2.0</value>
+</resheader>
+<resheader name="reader">
+<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+</resheader>
+<resheader name="writer">
+<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+</resheader>
+<data name="Control_Display_Name_Key" xml:space="preserve">
+    <value>Елемент керування залежним вибором</value>
+    <comment/>
+</data>
+<data name="Control_Description_Key" xml:space="preserve">
+    <value>Елемент керування Power Apps Component Framework (PCF) для динамічної фільтрації полів залежного вибору. Автоматично фільтрує доступні параметри на основі вибору батьківського поля, підтримуючи ієрархічні відносини даних у Dynamics 365 та застосунках Power Apps на основі моделей.</value>
+    <comment/>
+</data>
+<data name="dependentChoice_Display_Key" xml:space="preserve">
+    <value>Поле залежного вибору</value>
+    <comment>The choice field that will be filtered based on the parent selection</comment>
+</data>
+<data name="dependentChoice_Desc_Key" xml:space="preserve">
+    <value>Прив'яжіть до поля залежного вибору або множинного вибору, яке має відображати відфільтровані параметри на основі значення батьківського поля. Доступні параметри цього поля будуть динамічно обмежені відповідно до зіставлення конфігурації.</value>
+    <comment/>
+</data>
+<data name="parentChoice_Display_Key" xml:space="preserve">
+    <value>Батьківське поле вибору</value>
+    <comment>The parent choice field that controls the filtering</comment>
+</data>
+<data name="parentChoice_Desc_Key" xml:space="preserve">
+    <value>Прив'яжіть до батьківського поля вибору або множинного вибору, яке визначає, які параметри доступні у залежному полі. Коли значення цього поля змінюється, параметри залежного поля будуть відфільтровані відповідним чином.</value>
+    <comment/>
+</data>
+<data name="configurationParameters_Display_Key" xml:space="preserve">
+    <value>Конфігурація (JSON)</value>
+    <comment>JSON configuration for parent-to-dependent mappings</comment>
+</data>
+<data name="configurationParameters_Desc_Key" xml:space="preserve">
+    <value>Конфігурація JSON, яка визначає зіставлення між батьківськими значеннями та дозволеними залежними значеннями. Формат: {"mappings":[{"parentValue":1,"dependentValues":[10,20,30]}]}. Кожне зіставлення вказує, які залежні параметри доступні для кожного батьківського значення.</value>
+    <comment/>
+</data>
+<data name="dependent-choice-select-text" xml:space="preserve">
+    <value>--Виберіть--</value>
+    <comment/>
+</data>
+<data name="dependent-choice-configuration-error-dialog-title" xml:space="preserve">
+    <value>Помилка конфігурації</value>
+    <comment>Title for the configuration error dialog</comment>
+</data>
+<data name="dependent-choice-configuration-error-dialog-message" xml:space="preserve">
+    <value>Параметр конфігурації недійсний:</value>
+    <comment>Error message shown when configuration is invalid</comment>
+</data>
+<data name="dependent-choice-configuration-error-dialog-expected-format-label" xml:space="preserve">
+    <value>Очікуваний формат:</value>
+    <comment>Label for the expected JSON format example</comment>
+</data>
+<data name="dependent-choice-configuration-error-dialog-ok-button" xml:space="preserve">
+    <value>OK</value>
+    <comment>OK button text for the error dialog</comment>
+</data>
+</root>

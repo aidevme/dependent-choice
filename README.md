@@ -8,10 +8,37 @@ A Power Apps Component Framework (PCF) control that provides dynamic filtering f
 - **Flexible Configuration**: JSON-based mapping configuration for easy customization
 - **Multi-Select Support**: Works with both single-select and multi-select option sets
 - **Fluent UI Integration**: Modern UI with theme support and accessibility
-- **Design Mode Support**: Mock data for testing in PowerApps maker portal
-- **Localization Ready**: Supports multiple languages (English, German, French, Italian)
+- **Metadata Service**: WebAPI-based metadata retrieval with 5-minute caching
+- **Auto-Cleanup**: Automatically removes invalid selections when parent changes
+- **Configuration Validation**: Validates JSON configuration on load with user-friendly error dialog
+- **Multi-Language Support**: Fully localized in 14 languages
 - **TypeScript**: Fully typed for better development experience
 - **Performance Optimized**: Uses React hooks and memoization for efficient rendering
+
+## 🌍 Supported Languages
+
+The control is fully localized and supports the following languages:
+
+- ![us](https://flagcdn.com/w20/us.png) **English (1033)** - English
+- ![cz](https://flagcdn.com/w20/cz.png) **Czech (1029)** - Čeština
+- ![dk](https://flagcdn.com/w20/dk.png) **Danish (1030)** - Dansk
+- ![de](https://flagcdn.com/w20/de.png) **German (1031)** - Deutsch
+- ![gr](https://flagcdn.com/w20/gr.png) **Greek (1032)** - Ελληνικά
+- ![fr](https://flagcdn.com/w20/fr.png) **French (1036)** - Français
+- ![hu](https://flagcdn.com/w20/hu.png) **Hungarian (1038)** - Magyar
+- ![it](https://flagcdn.com/w20/it.png) **Italian (1040)** - Italiano
+- ![jp](https://flagcdn.com/w20/jp.png) **Japanese (1041)** - 日本語
+- ![kr](https://flagcdn.com/w20/kr.png) **Korean (1042)** - 한국어
+- ![pl](https://flagcdn.com/w20/pl.png) **Polish (1045)** - Polski
+- ![ru](https://flagcdn.com/w20/ru.png) **Russian (1049)** - Русский
+- ![sk](https://flagcdn.com/w20/sk.png) **Slovak (1051)** - Slovenčina
+- ![se](https://flagcdn.com/w20/se.png) **Swedish (1053)** - Svenska
+- ![ua](https://flagcdn.com/w20/ua.png) **Ukrainian (1058)** - Українська
+- ![vn](https://flagcdn.com/w20/vn.png) **Vietnamese (1066)** - Tiếng Việt
+- ![pt](https://flagcdn.com/w20/pt.png) **Portuguese - Portugal (2070)** - Português
+- ![es](https://flagcdn.com/w20/es.png) **Spanish - Spain (3082)** - Español
+
+The control automatically displays in the user's language based on their Dynamics 365/Power Apps language settings.
 
 ## 📋 Use Cases
 

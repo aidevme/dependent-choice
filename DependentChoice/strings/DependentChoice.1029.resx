@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+<xsd:schema id="root" xmlns="" xmlns:xsd="https://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+<xsd:import namespace="https://www.w3.org/XML/1998/namespace" />
+<xsd:element name="root" msdata:IsDataSet="true">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded">
+  <xsd:element name="metadata">
+	<xsd:complexType>
+	  <xsd:sequence>
+		<xsd:element name="value" type="xsd:string" minOccurs="0" />
+	  </xsd:sequence>
+	  <xsd:attribute name="name" use="required" type="xsd:string" />
+	  <xsd:attribute name="type" type="xsd:string" />
+	  <xsd:attribute name="mimetype" type="xsd:string" />
+	  <xsd:attribute ref="xml:space" />
+	</xsd:complexType>
+  </xsd:element>
+  <xsd:element name="assembly">
+	<xsd:complexType>
+	  <xsd:attribute name="alias" type="xsd:string" />
+	  <xsd:attribute name="name" type="xsd:string" />
+	</xsd:complexType>
+  </xsd:element>
+  <xsd:element name="data">
+	<xsd:complexType>
+	  <xsd:sequence>
+		<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+		<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+	  </xsd:sequence>
+	  <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+	  <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+	  <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+	  <xsd:attribute ref="xml:space" />
+	</xsd:complexType>
+  </xsd:element>
+  <xsd:element name="resheader">
+	<xsd:complexType>
+	  <xsd:sequence>
+		<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+	  </xsd:sequence>
+	  <xsd:attribute name="name" type="xsd:string" use="required" />
+	</xsd:complexType>
+  </xsd:element>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:schema>
+<resheader name="resmimetype">
+<value>text/microsoft-resx</value>
+</resheader>
+<resheader name="version">
+<value>2.0</value>
+</resheader>
+<resheader name="reader">
+<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+</resheader>
+<resheader name="writer">
+<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+</resheader>
+<data name="Control_Display_Name_Key" xml:space="preserve">
+    <value>Ovládací prvek závislé volby</value>
+    <comment/>
+</data>
+<data name="Control_Description_Key" xml:space="preserve">
+    <value>Ovládací prvek Power Apps Component Framework (PCF) pro dynamické filtrování polí závislých voleb. Automaticky filtruje dostupné možnosti na základě výběru nadřazeného pole a podporuje hierarchické vztahy dat v Dynamics 365 a aplikacích Power Apps založených na modelu.</value>
+    <comment/>
+</data>
+<data name="dependentChoice_Display_Key" xml:space="preserve">
+    <value>Pole závislé volby</value>
+    <comment>The choice field that will be filtered based on the parent selection</comment>
+</data>
+<data name="dependentChoice_Desc_Key" xml:space="preserve">
+    <value>Navažte na pole závislé volby nebo vícenásobného výběru, které by mělo zobrazovat filtrované možnosti na základě hodnoty nadřazeného pole. Dostupné možnosti tohoto pole budou dynamicky omezeny podle mapování konfigurace.</value>
+    <comment/>
+</data>
+<data name="parentChoice_Display_Key" xml:space="preserve">
+    <value>Nadřazené pole volby</value>
+    <comment>The parent choice field that controls the filtering</comment>
+</data>
+<data name="parentChoice_Desc_Key" xml:space="preserve">
+    <value>Navažte na nadřazené pole volby nebo vícenásobného výběru, které určuje, které možnosti jsou dostupné v závislém poli. Když se změní hodnota tohoto pole, možnosti závislého pole budou odpovídajícím způsobem filtrovány.</value>
+    <comment/>
+</data>
+<data name="configurationParameters_Display_Key" xml:space="preserve">
+    <value>Konfigurace (JSON)</value>
+    <comment>JSON configuration for parent-to-dependent mappings</comment>
+</data>
+<data name="configurationParameters_Desc_Key" xml:space="preserve">
+    <value>Konfigurace JSON definující mapování mezi nadřazenými hodnotami a povolenými závislými hodnotami. Formát: {"mappings":[{"parentValue":1,"dependentValues":[10,20,30]}]}. Každé mapování určuje, které závislé možnosti jsou dostupné pro každou nadřazenou hodnotu.</value>
+    <comment/>
+</data>
+<data name="dependent-choice-select-text" xml:space="preserve">
+    <value>--Vybrat--</value>
+    <comment/>
+</data>
+<data name="dependent-choice-configuration-error-dialog-title" xml:space="preserve">
+    <value>Chyba konfigurace</value>
+    <comment>Title for the configuration error dialog</comment>
+</data>
+<data name="dependent-choice-configuration-error-dialog-message" xml:space="preserve">
+    <value>Konfigurační parametr je neplatný:</value>
+    <comment>Error message shown when configuration is invalid</comment>
+</data>
+<data name="dependent-choice-configuration-error-dialog-expected-format-label" xml:space="preserve">
+    <value>Očekávaný formát:</value>
+    <comment>Label for the expected JSON format example</comment>
+</data>
+<data name="dependent-choice-configuration-error-dialog-ok-button" xml:space="preserve">
+    <value>OK</value>
+    <comment>OK button text for the error dialog</comment>
+</data>
+</root>
