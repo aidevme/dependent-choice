@@ -25,8 +25,16 @@ export const DependentChoiceControl: React.FC<IDependentChoiceAppProps> = (
   if (!pcfContext.isVisible()) return <></>;
 
   const isMultiSelect = props.isMultiSelect;
-  // Determine disabled state from context (disabled or user lacks edit permission).
-  const isDisabled = !pcfContext.isControlEditable();
+  
+  // Check if parent choice has no value
+  const hasNoParentValue = 
+    props.parentChoiceValue === null || 
+    props.parentChoiceValue === undefined || 
+    props.parentChoiceValue === -1 ||
+    (Array.isArray(props.parentChoiceValue) && props.parentChoiceValue.length === 0);
+  
+  // Determine disabled state from context (disabled or user lacks edit permission) or no parent value
+  const isDisabled = !pcfContext.isControlEditable() || hasNoParentValue;
   
   // Get localized select text
   const selectText = props.context.resources.getString("dependent-choice-select-text");
@@ -61,16 +69,72 @@ export const DependentChoiceControl: React.FC<IDependentChoiceAppProps> = (
     }
   }, [props.currentValue, isMultiSelect]);
 
+  // Auto-remove invalid dependent selections when parent choice changes
+  React.useEffect(() => {
+    // Skip if no mapping service or no parent value
+    if (!pcfContext.dependencyMappingService || !props.parentChoiceValue) {
+      return;
+    }
+
+    // Get currently allowed values based on parent selection
+    const parentValues = Array.isArray(props.parentChoiceValue) 
+      ? props.parentChoiceValue 
+      : [props.parentChoiceValue];
+
+    // Skip if parent has no valid values
+    if (parentValues.length === 0 || parentValues[0] === -1 || parentValues[0] === null || parentValues[0] === undefined) {
+      return;
+    }
+
+    const allowedValues = new Set<number>();
+    parentValues.forEach(parentValue => {
+      const allowed = pcfContext.dependencyMappingService.getDependentValues(parentValue);
+      if (allowed) {
+        allowed.forEach(val => allowedValues.add(val));
+      }
+    });
+
+    console.log("DependentChoice: Auto-cleanup check - Allowed values:", Array.from(allowedValues));
+
+    // Handle multi-select: remove invalid selections
+    if (isMultiSelect && Array.isArray(selectedKeys) && selectedKeys.length > 0) {
+      const validSelectedKeys = selectedKeys.filter(key => 
+        allowedValues.has(Number(key))
+      );
+
+      // Update if any values were removed
+      if (validSelectedKeys.length !== selectedKeys.length) {
+        const removed = selectedKeys.filter(key => !allowedValues.has(Number(key)));
+        console.log("DependentChoice: Auto-removing invalid selections:", removed);
+        setSelectedKeys(validSelectedKeys);
+        props.onChange(validSelectedKeys.map(Number));
+      }
+    } 
+    // Handle single-select: clear if value no longer valid
+    else if (!isMultiSelect && selectedKey && selectedKey !== "" && selectedKey !== "-1") {
+      if (!allowedValues.has(Number(selectedKey))) {
+        console.log("DependentChoice: Auto-clearing invalid single selection:", selectedKey);
+        setSelectedKey("");
+        props.onChange(null);
+      }
+    }
+  }, [props.parentChoiceValue, pcfContext.dependencyMappingService, isMultiSelect, selectedKey, selectedKeys, props.onChange]);
+
   // Map the options using the information passed from the index.
   const mappedOptions: IDependentChoiceOption[] = props.options.map((opt) => ({
     key: opt.Value,
-    text: opt.Label,    
+    text: opt.Label,
+    // @ts-expect-error - IsHidden exists in option metadata but not in types
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    hidden: opt.IsHidden ?? false,
   }));
 
   // Filter options based on parent choice value using dependency mapping
   const filteredOptions = React.useMemo(() => {
     console.log("DependentChoice: Filtering options", {
       parentChoiceValue: props.parentChoiceValue,
+      parentChoiceValueType: typeof props.parentChoiceValue,
+      isArray: Array.isArray(props.parentChoiceValue),
       hasMappingService: !!pcfContext.dependencyMappingService,
       totalOptions: mappedOptions.length
     });
@@ -82,7 +146,13 @@ export const DependentChoiceControl: React.FC<IDependentChoiceAppProps> = (
     }
 
     // If no parent value selected, show all options
-    if (!props.parentChoiceValue || props.parentChoiceValue === -1) {
+    // Check for null, undefined, empty array, or -1
+    if (
+      props.parentChoiceValue === null || 
+      props.parentChoiceValue === undefined || 
+      props.parentChoiceValue === -1 ||
+      (Array.isArray(props.parentChoiceValue) && props.parentChoiceValue.length === 0)
+    ) {
       console.log("DependentChoice: No parent value selected - showing all options");
       return mappedOptions;
     }
@@ -119,14 +189,17 @@ export const DependentChoiceControl: React.FC<IDependentChoiceAppProps> = (
 
     // Filter options to only those that are allowed
     // If allowedValues is empty (e.g., Antarctica with no countries), this returns empty array
+    // Also exclude hidden options
     const filtered = mappedOptions.filter(opt => 
-      allowedValues.has(Number(opt.key)) || 
-      // Always keep currently selected values even if not in mapping
-      (!isMultiSelect && selectedKey !== "" && selectedKey === opt.key.toString()) ||
-      (isMultiSelect && selectedKeys.includes(opt.key.toString()))
+      !opt.hidden && (
+        allowedValues.has(Number(opt.key)) || 
+        // Always keep currently selected values even if not in mapping
+        (!isMultiSelect && selectedKey !== "" && selectedKey === opt.key.toString()) ||
+        (isMultiSelect && selectedKeys.includes(opt.key.toString()))
+      )
     );
     
-    console.log("DependentChoice: Filtered options count:", filtered.length);
+    console.log("DependentChoice: Filtered options count:", filtered.length, "Hidden options excluded:", mappedOptions.filter(o => o.hidden).length);
     return filtered;
   }, [props.parentChoiceValue, mappedOptions, pcfContext.dependencyMappingService, 
       isMultiSelect, selectedKey, selectedKeys]);

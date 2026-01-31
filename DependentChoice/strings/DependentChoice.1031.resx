@@ -66,8 +66,48 @@
     <value>Ein Power Apps Component Framework (PCF)-Steuerelement zur dynamischen Filterung abhängiger Auswahlfelder. Filtert automatisch verfügbare Optionen basierend auf der Auswahl des übergeordneten Felds und unterstützt hierarchische Datenbeziehungen in Dynamics 365 und Power Apps Model-Driven-Apps.</value>
     <comment/>
 </data>
+<data name="dependentChoice_Display_Key" xml:space="preserve">
+    <value>Abhängiges Auswahlfeld</value>
+    <comment>The choice field that will be filtered based on the parent selection</comment>
+</data>
+<data name="dependentChoice_Desc_Key" xml:space="preserve">
+    <value>Binden Sie an das abhängige Auswahl- oder Mehrfachauswahlfeld, das gefilterte Optionen basierend auf dem Wert des übergeordneten Felds anzeigen soll. Die verfügbaren Optionen dieses Felds werden gemäß der Konfigurationszuordnung dynamisch eingeschränkt.</value>
+    <comment/>
+</data>
+<data name="parentChoice_Display_Key" xml:space="preserve">
+    <value>Übergeordnetes Auswahlfeld</value>
+    <comment>The parent choice field that controls the filtering</comment>
+</data>
+<data name="parentChoice_Desc_Key" xml:space="preserve">
+    <value>Binden Sie an das übergeordnete Auswahl- oder Mehrfachauswahlfeld, das bestimmt, welche Optionen im abhängigen Feld verfügbar sind. Wenn sich der Wert dieses Felds ändert, werden die Optionen des abhängigen Felds entsprechend gefiltert.</value>
+    <comment/>
+</data>
+<data name="configurationParameters_Display_Key" xml:space="preserve">
+    <value>Konfiguration (JSON)</value>
+    <comment>JSON configuration for parent-to-dependent mappings</comment>
+</data>
+<data name="configurationParameters_Desc_Key" xml:space="preserve">
+    <value>JSON-Konfiguration, die die Zuordnung zwischen übergeordneten Werten und zulässigen abhängigen Werten definiert. Format: {"mappings":[{"parentValue":1,"dependentValues":[10,20,30]}]}. Jede Zuordnung gibt an, welche abhängigen Optionen für jeden übergeordneten Wert verfügbar sind.</value>
+    <comment/>
+</data>
 <data name="dependent-choice-select-text" xml:space="preserve">
     <value>--Auswählen--</value>
     <comment/>
+</data>
+<data name="dependent-choice-configuration-error-dialog-title" xml:space="preserve">
+    <value>Konfigurationsfehler</value>
+    <comment>Title for the configuration error dialog</comment>
+</data>
+<data name="dependent-choice-configuration-error-dialog-message" xml:space="preserve">
+    <value>Der Konfigurationsparameter ist ungültig:</value>
+    <comment>Error message shown when configuration is invalid</comment>
+</data>
+<data name="dependent-choice-configuration-error-dialog-expected-format-label" xml:space="preserve">
+    <value>Erwartetes Format:</value>
+    <comment>Label for the expected JSON format example</comment>
+</data>
+<data name="dependent-choice-configuration-error-dialog-ok-button" xml:space="preserve">
+    <value>OK</value>
+    <comment>OK button text for the error dialog</comment>
 </data>
 </root>

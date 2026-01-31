@@ -4,8 +4,10 @@ import { IdPrefixProvider, FluentProvider, webLightTheme} from "@fluentui/react-
 import { PcfContextProvider } from "./services/PcfContextService/PcfContext";
 import { PcfContextService, IPcfContextServiceProps } from "./services/PcfContextService/PcfContextService";
 import { useDependentChoiceStyles } from "./styles/Styles"
+import { ConfigurationValidator } from "./tools/ConfigurationValidator";
 
 import { DependentChoiceControl } from "./components/DependentChoice";
+import { DependentChoiceConfigurationErrorDialog } from "./components/DependentChoiceConfigurationErrorDialog";
 
 export interface IDependentChoiceAppProps extends IPcfContextServiceProps {
   onChange: (newValue: number | number[] | null) => void;
@@ -19,6 +21,24 @@ export interface IDependentChoiceAppProps extends IPcfContextServiceProps {
 
 export const DependentChoiceApp: React.FC<IDependentChoiceAppProps> = (props) => {
   const styles = useDependentChoiceStyles();
+  
+  // Validate configuration on mount
+  const [configErrors, setConfigErrors] = React.useState<string[]>([]);
+  const [showErrorDialog, setShowErrorDialog] = React.useState(false);
+
+  React.useEffect(() => {
+    const validationResult = ConfigurationValidator.validate(props.configurationParameters);
+    if (!validationResult.isValid) {
+      console.error("DependentChoiceApp: Configuration validation failed", validationResult.errors);
+      setConfigErrors(validationResult.errors);
+      setShowErrorDialog(true);
+    } else {
+      console.log("DependentChoiceApp: Configuration is valid");
+      setConfigErrors([]);
+      setShowErrorDialog(false);
+    }
+  }, [props.configurationParameters]);
+
   // Create the context service.
   const pcfContextService = new PcfContextService({ 
     context: props.context, 
@@ -39,6 +59,12 @@ export const DependentChoiceApp: React.FC<IDependentChoiceAppProps> = (props) =>
       <IdPrefixProvider value={`app-${props.instanceid}-`}>
         <FluentProvider theme={theme} className={styles.root}>
           <DependentChoiceControl {...props} />
+          <DependentChoiceConfigurationErrorDialog 
+            isOpen={showErrorDialog}
+            errors={configErrors}
+            onDismiss={() => setShowErrorDialog(false)}
+            context={props.context}
+          />
         </FluentProvider>
       </IdPrefixProvider>
     </PcfContextProvider>

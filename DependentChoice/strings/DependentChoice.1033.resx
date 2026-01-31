@@ -153,4 +153,20 @@
     <value>--Select--</value>
     <comment/>
   </data>
+  <data name="dependent-choice-configuration-error-dialog-title" xml:space="preserve">
+    <value>Configuration Error</value>
+    <comment>Title for the configuration error dialog</comment>
+  </data>
+  <data name="dependent-choice-configuration-error-dialog-message" xml:space="preserve">
+    <value>The configuration parameter is invalid:</value>
+    <comment>Error message shown when configuration is invalid</comment>
+  </data>
+  <data name="dependent-choice-configuration-error-dialog-expected-format-label" xml:space="preserve">
+    <value>Expected format:</value>
+    <comment>Label for the expected JSON format example</comment>
+  </data>
+  <data name="dependent-choice-configuration-error-dialog-ok-button" xml:space="preserve">
+    <value>OK</value>
+    <comment>OK button text for the error dialog</comment>
+  </data>
 </root>

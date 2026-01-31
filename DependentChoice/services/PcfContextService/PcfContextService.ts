@@ -1,6 +1,7 @@
 import { Theme } from "@fluentui/react-components";
 import { IInputs } from "../../generated/ManifestTypes";
 import { DependencyMappingService } from "../DependencyMappingService/DependencyMappingService";
+import { MetadataService, IOptionSetMetadata } from "../MetadataService/MetadataService";
 
 export interface IPcfContextServiceProps {
   context: ComponentFramework.Context<IInputs>;
@@ -28,6 +29,7 @@ export class PcfContextService {
   theme: Theme;
   formFactor: string;
   dependencyMappingService: DependencyMappingService;
+  metadataService: MetadataService;
 
   constructor(props: IPcfContextServiceProps) {
     this.instanceid = props.instanceid;
@@ -42,6 +44,9 @@ export class PcfContextService {
     // Initialize dependency mapping service with configuration
     this.dependencyMappingService = new DependencyMappingService();
     this.dependencyMappingService.initialize(props.configurationParameters ?? null);
+    
+    // Initialize metadata service with WebAPI
+    this.metadataService = new MetadataService(props.context.webAPI);
   }
 
   public inDesignMode(): boolean {
@@ -128,5 +133,62 @@ export class PcfContextService {
     // @ts-expect-error Assert contextInfo to a known type.
     const contextInfo = this.context.mode.contextInfo as ContextInfo;
     return contextInfo.entityId;
-  }  
+  }
+
+  /**
+   * Retrieves fresh option set metadata for the dependent choice field via WebAPI.
+   * This includes IsHidden and other metadata that may not be in the context.
+   * 
+   * @returns Promise with option set metadata including all options with IsHidden property
+   * 
+   * @example
+   * ```typescript
+   * const metadata = await pcfContext.getDependentChoiceMetadata();
+   * const visibleOptions = metadata.Options.filter(opt => !opt.IsHidden);
+   * ```
+   */
+  public async getDependentChoiceMetadata(): Promise<IOptionSetMetadata | null> {
+    try {
+      const entityName = this.getEntityTypeName();
+      // @ts-expect-error - LogicalName exists but not in types
+      // eslint-disable-next-line 
+      const attributeName: string = this.context.parameters.dependentChoice.attributes?.LogicalName;
+      
+      if (!entityName || !attributeName) {
+        console.warn("PcfContextService: Cannot retrieve metadata - entity or attribute name not available");
+        return null;
+      }
+
+      console.log(`PcfContextService: Retrieving metadata for ${entityName}.${attributeName}`);
+      return await this.metadataService.getOptionSetMetadata(entityName, attributeName);
+    } catch (error) {
+      console.error("PcfContextService: Failed to retrieve dependent choice metadata", error);
+      return null;
+    }
+  }
+
+  /**
+   * Retrieves fresh option set metadata for the parent choice field via WebAPI.
+   * 
+   * @returns Promise with option set metadata
+   */
+  public async getParentChoiceMetadata(): Promise<IOptionSetMetadata | null> {
+    try {
+      const entityName = this.getEntityTypeName();
+      // @ts-expect-error - LogicalName exists but not in types
+      // eslint-disable-next-line 
+      const attributeName: string = this.context.parameters.parentChoice.attributes?.LogicalName;
+      
+      if (!entityName || !attributeName) {
+        console.warn("PcfContextService: Cannot retrieve metadata - entity or attribute name not available");
+        return null;
+      }
+
+      console.log(`PcfContextService: Retrieving metadata for ${entityName}.${attributeName}`);
+      return await this.metadataService.getOptionSetMetadata(entityName, attributeName);
+    } catch (error) {
+      console.error("PcfContextService: Failed to retrieve parent choice metadata", error);
+      return null;
+    }
+  }
 }

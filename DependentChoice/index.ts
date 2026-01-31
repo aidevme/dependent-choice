@@ -3,7 +3,6 @@ import * as ReactDOM from "react-dom";
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
 import { DependentChoiceApp, IDependentChoiceAppProps } from "./DependentChoiceApp";
 import { v4 as uuidv4 } from "uuid";
-import { ChoiceService } from "./services/ChoiceService/ChoiceService";
 
 export class DependentChoice implements ComponentFramework.ReactControl<IInputs, IOutputs> {
     private notifyOutputChanged: () => void;
@@ -23,10 +22,10 @@ export class DependentChoice implements ComponentFramework.ReactControl<IInputs,
     /**
      * Used to initialize the control instance. Controls can kick off remote server calls and other initialization actions here.
      * Data-set values are not initialized here, use updateView.
-     * @param context The entire property bag available to control via Context Object; It contains values as set up by the customizer mapped to property names defined in the manifest, as well as utility functions.
-     * @param notifyOutputChanged A callback method to alert the framework that the control has new outputs ready to be retrieved asynchronously.
-     * @param state A piece of data that persists in one session for a single user. Can be set at any point in a controls life cycle by calling 'setControlState' in the Mode interface.
-     * @param container The container element for the control.
+     * @param context - The entire property bag available to control via Context Object; It contains values as set up by the customizer mapped to property names defined in the manifest, as well as utility functions.
+     * @param notifyOutputChanged - A callback method to alert the framework that the control has new outputs ready to be retrieved asynchronously.
+     * @param state - A piece of data that persists in one session for a single user. Can be set at any point in a controls life cycle by calling 'setControlState' in the Mode interface.
+     * @param container - The container element for the control.
      */
     public init(
         context: ComponentFramework.Context<IInputs>,
@@ -42,7 +41,7 @@ export class DependentChoice implements ComponentFramework.ReactControl<IInputs,
 
     /**
      * onChange callback that handles value changes from the control.
-     * @param newValue The new selected value (single number or array of numbers for multi-select)
+     * @param newValue - The new selected value (single number or array of numbers for multi-select)
      */
     private onChange = (newValue: number | number[] | null): void => {
         if (newValue === -1 || (Array.isArray(newValue) && newValue.includes(-1))) {
@@ -55,7 +54,7 @@ export class DependentChoice implements ComponentFramework.ReactControl<IInputs,
 
     /**
      * Called when any value in the property bag has changed. This includes field values, data-sets, global values such as container height and width, offline status, control metadata values such as label, visible, etc.
-     * @param context The entire property bag available to control via Context Object; It contains values as set up by the customizer mapped to names defined in the manifest, as well as utility functions
+     * @param context - The entire property bag available to control via Context Object; It contains values as set up by the customizer mapped to names defined in the manifest, as well as utility functions
      * @returns ReactElement root react element for the control
      */
     public updateView(context: ComponentFramework.Context<IInputs>): React.ReactElement {
@@ -79,19 +78,22 @@ export class DependentChoice implements ComponentFramework.ReactControl<IInputs,
         console.log("Is MultiSelect:", this.isMultiSelect);
 
         // Get and log parentChoice value
-        // For multi-select, raw is an array of numbers
-        // For single select, raw is a single number (or has _val property)
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+        // For multi-select, raw is an array of numbers (or array of objects with Value property)
+        // For single select, raw is a single number
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         let parentChoiceValue = context.parameters.parentChoice.raw;
         
-        // Check if it's a single select with _val property
+        console.log("Parent Choice Raw Value (before processing):", parentChoiceValue, "Type:", typeof parentChoiceValue, "IsArray:", Array.isArray(parentChoiceValue));
+        
+        // Handle multi-select array of objects with Value property
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        if (parentChoiceValue?._val !== undefined) {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-            parentChoiceValue = parentChoiceValue._val;
+        if (Array.isArray(parentChoiceValue) && parentChoiceValue.length > 0 && parentChoiceValue[0]?.Value !== undefined) {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+            parentChoiceValue = parentChoiceValue.map((item: any) => item.Value);
+            console.log("Parent Choice Value (extracted from array of objects):", parentChoiceValue);
         }
         
-        console.log("Parent Choice Value:", parentChoiceValue, "IsArray:", Array.isArray(parentChoiceValue));
+        console.log("Parent Choice Value (final):", parentChoiceValue, "IsArray:", Array.isArray(parentChoiceValue));
         // @ts-expect-error this is defined
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const parentChoiceOptions = context.parameters.parentChoice.attributes?.Options;
@@ -101,13 +103,10 @@ export class DependentChoice implements ComponentFramework.ReactControl<IInputs,
         const configurationParameters = context.parameters.configurationParameters.raw;
         console.log("Configuration Parameters:", configurationParameters);
 
-        // Use mock options in design mode, otherwise use actual options from context
-        // For dependentChoice, show all dependent choices (countries) in design mode
+        // Get options from context
+        // @ts-expect-error this is defined
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        const options = isDesignMode 
-            ? ChoiceService.generateAllMockDependentOptions()
-            : // @ts-expect-error this is defined
-              context.parameters.dependentChoice.attributes?.Options ?? [];
+        const options = context.parameters.dependentChoice.attributes?.Options ?? [];
 
         this.props = {
             onChange: this.onChange,
@@ -139,9 +138,9 @@ export class DependentChoice implements ComponentFramework.ReactControl<IInputs,
             ? (Array.isArray(this.selectedValue) ? this.selectedValue : [])
             : (Array.isArray(this.selectedValue) ? null : this.selectedValue);
         
+        // Don't return parentChoice - it's bound input only, not output
         return { 
-            dependentChoice: outputValue,
-            parentChoice: undefined
+            dependentChoice: outputValue
         } as IOutputs;
     }
 

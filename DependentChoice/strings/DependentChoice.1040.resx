@@ -66,8 +66,48 @@
     <value>Un controllo Power Apps Component Framework (PCF) per il filtraggio dinamico dei campi di scelta dipendenti. Filtra automaticamente le opzioni disponibili in base alle selezioni del campo principale, supportando relazioni di dati gerarchiche in Dynamics 365 e app Power Apps basate su modelli.</value>
     <comment/>
 </data>
+<data name="dependentChoice_Display_Key" xml:space="preserve">
+    <value>Campo di scelta dipendente</value>
+    <comment>The choice field that will be filtered based on the parent selection</comment>
+</data>
+<data name="dependentChoice_Desc_Key" xml:space="preserve">
+    <value>Collega al campo di scelta o scelta multipla dipendente che deve visualizzare opzioni filtrate in base al valore del campo principale. Le opzioni disponibili di questo campo saranno dinamicamente limitate secondo la mappatura di configurazione.</value>
+    <comment/>
+</data>
+<data name="parentChoice_Display_Key" xml:space="preserve">
+    <value>Campo di scelta principale</value>
+    <comment>The parent choice field that controls the filtering</comment>
+</data>
+<data name="parentChoice_Desc_Key" xml:space="preserve">
+    <value>Collega al campo di scelta o scelta multipla principale che determina quali opzioni sono disponibili nel campo dipendente. Quando il valore di questo campo cambia, le opzioni del campo dipendente saranno filtrate di conseguenza.</value>
+    <comment/>
+</data>
+<data name="configurationParameters_Display_Key" xml:space="preserve">
+    <value>Configurazione (JSON)</value>
+    <comment>JSON configuration for parent-to-dependent mappings</comment>
+</data>
+<data name="configurationParameters_Desc_Key" xml:space="preserve">
+    <value>Configurazione JSON che definisce la mappatura tra i valori principali e i valori dipendenti consentiti. Formato: {"mappings":[{"parentValue":1,"dependentValues":[10,20,30]}]}. Ogni mappatura specifica quali opzioni dipendenti sono disponibili per ogni valore principale.</value>
+    <comment/>
+</data>
 <data name="dependent-choice-select-text" xml:space="preserve">
     <value>--Seleziona--</value>
     <comment/>
+</data>
+<data name="dependent-choice-configuration-error-dialog-title" xml:space="preserve">
+    <value>Errore di configurazione</value>
+    <comment>Title for the configuration error dialog</comment>
+</data>
+<data name="dependent-choice-configuration-error-dialog-message" xml:space="preserve">
+    <value>Il parametro di configurazione non è valido:</value>
+    <comment>Error message shown when configuration is invalid</comment>
+</data>
+<data name="dependent-choice-configuration-error-dialog-expected-format-label" xml:space="preserve">
+    <value>Formato previsto:</value>
+    <comment>Label for the expected JSON format example</comment>
+</data>
+<data name="dependent-choice-configuration-error-dialog-ok-button" xml:space="preserve">
+    <value>OK</value>
+    <comment>OK button text for the error dialog</comment>
 </data>
 </root>
