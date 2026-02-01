@@ -211,31 +211,53 @@ pac pcf push --publisher-prefix aidevme
 dependent-choice/
 ├── DependentChoice/
 │   ├── components/
-│   │   └── DependentChoice.tsx          # Main React component
+│   │   ├── DependentChoice.tsx                        # Main React component
+│   │   └── DependentChoiceConfigurationErrorDialog.tsx # Error dialog component
 │   ├── services/
+│   │   ├── index.ts                                   # Service exports
 │   │   ├── ChoiceService/
-│   │   │   └── ChoiceService.ts         # Mock data service
+│   │   │   └── ChoiceService.ts                       # WebAPI metadata service
 │   │   ├── DependencyMappingService/
-│   │   │   └── DependencyMappingService.ts  # Filtering logic
+│   │   │   └── DependencyMappingService.ts            # Filtering logic
+│   │   ├── MetadataService/
+│   │   │   └── MetadataService.ts                     # Dataverse metadata retrieval
 │   │   └── PcfContextService/
-│   │       ├── PcfContext.tsx           # React context provider
-│   │       └── PcfContextService.ts     # PCF context wrapper
+│   │       ├── PcfContext.tsx                         # React context provider
+│   │       └── PcfContextService.ts                   # PCF context wrapper
 │   ├── statics/
-│   │   ├── configurationParameters.json # Example configuration
-│   │   └── mockChoices.json            # Mock data for testing
-│   ├── strings/                        # Localization files
+│   │   ├── configurationParameters.json               # Example configuration
+│   │   └── mockChoices.json                          # Mock data for testing
+│   ├── strings/                                      # Localization files (18 languages)
+│   │   ├── DependentChoice.1029.resx                 # Czech
+│   │   ├── DependentChoice.1030.resx                 # Danish
+│   │   ├── DependentChoice.1031.resx                 # German
+│   │   ├── DependentChoice.1032.resx                 # Greek
+│   │   ├── DependentChoice.1033.resx                 # English
+│   │   ├── DependentChoice.1036.resx                 # French
+│   │   ├── DependentChoice.1038.resx                 # Hungarian
+│   │   ├── DependentChoice.1040.resx                 # Italian
+│   │   ├── DependentChoice.1041.resx                 # Japanese
+│   │   ├── DependentChoice.1042.resx                 # Korean
+│   │   ├── DependentChoice.1045.resx                 # Polish
+│   │   ├── DependentChoice.1049.resx                 # Russian
+│   │   ├── DependentChoice.1051.resx                 # Slovak
+│   │   ├── DependentChoice.1053.resx                 # Swedish
+│   │   ├── DependentChoice.1058.resx                 # Ukrainian
+│   │   ├── DependentChoice.1066.resx                 # Vietnamese
+│   │   ├── DependentChoice.2070.resx                 # Portuguese (Portugal)
+│   │   └── DependentChoice.3082.resx                 # Spanish (Spain)
 │   ├── styles/
-│   │   └── Styles.ts                   # Fluent UI styles
-│   ├── ControlManifest.Input.xml       # PCF manifest
-│   ├── DependentChoiceApp.tsx          # React app wrapper
-│   └── index.ts                        # PCF control entry point
-├── Solution/                           # Dataverse solution
+│   │   └── Styles.ts                                 # Fluent UI styles
+│   ├── ControlManifest.Input.xml                     # PCF manifest
+│   ├── DependentChoiceApp.tsx                        # React app wrapper
+│   └── index.ts                                      # PCF control entry point
+├── Solution/                                         # Dataverse solution
 ├── .github/
-│   └── copilot-instructions.md         # Development guidelines
-├── eslint.config.mjs                   # ESLint configuration
-├── package.json                        # npm dependencies
-├── pcfconfig.json                      # PCF build configuration
-└── tsconfig.json                       # TypeScript configuration
+│   └── copilot-instructions.md                       # Development guidelines
+├── eslint.config.mjs                                 # ESLint configuration
+├── package.json                                      # npm dependencies
+├── pcfconfig.json                                    # PCF build configuration
+└── tsconfig.json                                     # TypeScript configuration
 ```
 
 ## 🔍 How It Works
@@ -314,25 +336,6 @@ The control includes extensive console logging for troubleshooting:
 "DependentChoice: Got dependent values for parent X:" // Allowed values retrieved
 "DependentChoice: Filtered options count:" // Final result
 ```
-
-## 🧪 Testing
-
-### Local Testing with Mock Data
-
-The control uses mock data from `statics/mockChoices.json` when running in design mode:
-
-- **Parent Choices**: 7 continents (Africa, Antarctica, Asia, Europe, North America, Oceania, South America)
-- **Dependent Choices**: 195 countries with proper continental assignments
-
-### Design Mode Detection
-
-Design mode is automatically detected for:
-- `make.powerapps.com` (Commercial)
-- `make.gov.powerapps.us` (GCC)
-- `make.high.powerapps.us` (GCC High)
-- `make.apps.appsplatform.us` (DoD)
-- `localhost` (Local development)
-
 ## 📝 Customization
 
 ### Creating Your Own Mappings
