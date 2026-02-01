@@ -69,6 +69,26 @@ export const DependentChoiceControl: React.FC<IDependentChoiceAppProps> = (
     }
   }, [props.currentValue, isMultiSelect]);
 
+  // Clean dependent choice when parent choice is unselected
+  React.useEffect(() => {
+    if (hasNoParentValue) {
+      // Clear the dependent choice value
+      if (isMultiSelect) {
+        if (selectedKeys.length > 0) {
+          console.log("DependentChoice: Clearing multi-select due to no parent value");
+          setSelectedKeys([]);
+          props.onChange([]);
+        }
+      } else {
+        if (selectedKey && selectedKey !== "" && selectedKey !== "-1") {
+          console.log("DependentChoice: Clearing single-select due to no parent value");
+          setSelectedKey("");
+          props.onChange(null);
+        }
+      }
+    }
+  }, [hasNoParentValue, isMultiSelect, selectedKey, selectedKeys, props]);
+
   // Auto-remove invalid dependent selections when parent choice changes
   React.useEffect(() => {
     // Skip if no mapping service or no parent value
