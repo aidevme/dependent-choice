@@ -71,11 +71,9 @@ export class DependentChoice implements ComponentFramework.ReactControl<IInputs,
         // @ts-expect-error this is defined
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const fieldType = context.parameters.dependentChoice.attributes?.Type;
-        console.log("DependentChoice field type:", fieldType);
         
         // Check for both possible multiselect type values
         this.isMultiSelect = fieldType === "multiselectpicklist" || fieldType === "MultiSelectPicklist";
-        console.log("Is MultiSelect:", this.isMultiSelect);
 
         // Get and log parentChoice value
         // For multi-select, raw is an array of numbers (or array of objects with Value property)
@@ -83,25 +81,19 @@ export class DependentChoice implements ComponentFramework.ReactControl<IInputs,
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         let parentChoiceValue = context.parameters.parentChoice.raw;
         
-        console.log("Parent Choice Raw Value (before processing):", parentChoiceValue, "Type:", typeof parentChoiceValue, "IsArray:", Array.isArray(parentChoiceValue));
-        
         // Handle multi-select array of objects with Value property
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         if (Array.isArray(parentChoiceValue) && parentChoiceValue.length > 0 && parentChoiceValue[0]?.Value !== undefined) {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
             parentChoiceValue = parentChoiceValue.map((item: any) => item.Value);
-            console.log("Parent Choice Value (extracted from array of objects):", parentChoiceValue);
         }
         
-        console.log("Parent Choice Value (final):", parentChoiceValue, "IsArray:", Array.isArray(parentChoiceValue));
         // @ts-expect-error this is defined
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const parentChoiceOptions = context.parameters.parentChoice.attributes?.Options;
-        console.log("Parent Choice Options:", parentChoiceOptions);
 
         // Get configuration parameters
         const configurationParameters = context.parameters.configurationParameters.raw;
-        console.log("Configuration Parameters:", configurationParameters);
 
         // Get options from context
         // @ts-expect-error this is defined

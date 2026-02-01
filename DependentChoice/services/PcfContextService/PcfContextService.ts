@@ -158,7 +158,6 @@ export class PcfContextService {
         return null;
       }
 
-      console.log(`PcfContextService: Retrieving metadata for ${entityName}.${attributeName}`);
       return await this.metadataService.getOptionSetMetadata(entityName, attributeName);
     } catch (error) {
       console.error("PcfContextService: Failed to retrieve dependent choice metadata", error);
@@ -182,7 +181,6 @@ export class PcfContextService {
         return null;
       }
 
-      console.log(`PcfContextService: Retrieving metadata for ${entityName}.${attributeName}`);
       return await this.metadataService.getOptionSetMetadata(entityName, attributeName);
     } catch (error) {
       console.error("PcfContextService: Failed to retrieve parent choice metadata", error);

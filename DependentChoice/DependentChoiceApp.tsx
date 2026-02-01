@@ -33,7 +33,6 @@ export const DependentChoiceApp: React.FC<IDependentChoiceAppProps> = (props) =>
       setConfigErrors(validationResult.errors);
       setShowErrorDialog(true);
     } else {
-      console.log("DependentChoiceApp: Configuration is valid");
       setConfigErrors([]);
       setShowErrorDialog(false);
     }

@@ -75,13 +75,11 @@ export const DependentChoiceControl: React.FC<IDependentChoiceAppProps> = (
       // Clear the dependent choice value
       if (isMultiSelect) {
         if (selectedKeys.length > 0) {
-          console.log("DependentChoice: Clearing multi-select due to no parent value");
           setSelectedKeys([]);
           props.onChange([]);
         }
       } else {
         if (selectedKey && selectedKey !== "" && selectedKey !== "-1") {
-          console.log("DependentChoice: Clearing single-select due to no parent value");
           setSelectedKey("");
           props.onChange(null);
         }
@@ -124,8 +122,6 @@ export const DependentChoiceControl: React.FC<IDependentChoiceAppProps> = (
 
       // Update if any values were removed
       if (validSelectedKeys.length !== selectedKeys.length) {
-        const removed = selectedKeys.filter(key => !allowedValues.has(Number(key)));
-        console.log("DependentChoice: Auto-removing invalid selections:", removed);
         setSelectedKeys(validSelectedKeys);
         props.onChange(validSelectedKeys.map(Number));
       }
@@ -133,7 +129,6 @@ export const DependentChoiceControl: React.FC<IDependentChoiceAppProps> = (
     // Handle single-select: clear if value no longer valid
     else if (!isMultiSelect && selectedKey && selectedKey !== "" && selectedKey !== "-1") {
       if (!allowedValues.has(Number(selectedKey))) {
-        console.log("DependentChoice: Auto-clearing invalid single selection:", selectedKey);
         setSelectedKey("");
         props.onChange(null);
       }
@@ -151,17 +146,8 @@ export const DependentChoiceControl: React.FC<IDependentChoiceAppProps> = (
 
   // Filter options based on parent choice value using dependency mapping
   const filteredOptions = React.useMemo(() => {
-    console.log("DependentChoice: Filtering options", {
-      parentChoiceValue: props.parentChoiceValue,
-      parentChoiceValueType: typeof props.parentChoiceValue,
-      isArray: Array.isArray(props.parentChoiceValue),
-      hasMappingService: !!pcfContext.dependencyMappingService,
-      totalOptions: mappedOptions.length
-    });
-
     // If no mapping service, show all options
     if (!pcfContext.dependencyMappingService) {
-      console.log("DependentChoice: No mapping service - showing all options");
       return mappedOptions;
     }
 
@@ -173,7 +159,6 @@ export const DependentChoiceControl: React.FC<IDependentChoiceAppProps> = (
       props.parentChoiceValue === -1 ||
       (Array.isArray(props.parentChoiceValue) && props.parentChoiceValue.length === 0)
     ) {
-      console.log("DependentChoice: No parent value selected - showing all options");
       return mappedOptions;
     }
 
@@ -182,15 +167,12 @@ export const DependentChoiceControl: React.FC<IDependentChoiceAppProps> = (
       ? props.parentChoiceValue 
       : [props.parentChoiceValue];
 
-    console.log("DependentChoice: Parent values to check:", parentValues);
-
     // Collect all allowed dependent values from all selected parents
     const allowedValues = new Set<number>();
     let hasMappings = false;
     
     parentValues.forEach(parentValue => {
       const allowed = pcfContext.dependencyMappingService.getDependentValues(parentValue);
-      console.log("DependentChoice: Got dependent values for parent", parentValue, ":", allowed);
       if (allowed !== null) {
         // Mapping exists (even if it's an empty array)
         hasMappings = true;
@@ -198,12 +180,9 @@ export const DependentChoiceControl: React.FC<IDependentChoiceAppProps> = (
       }
     });
 
-    console.log("DependentChoice: Has mappings:", hasMappings, "Allowed values count:", allowedValues.size);
-
     // If no mappings found at all, show all options (fail-safe)
     // But if mappings exist with empty arrays, respect that (show no/limited options)
     if (!hasMappings) {
-      console.log("DependentChoice: No mappings found - showing all options as fail-safe");
       return mappedOptions;
     }
 
@@ -219,7 +198,6 @@ export const DependentChoiceControl: React.FC<IDependentChoiceAppProps> = (
       )
     );
     
-    console.log("DependentChoice: Filtered options count:", filtered.length, "Hidden options excluded:", mappedOptions.filter(o => o.hidden).length);
     return filtered;
   }, [props.parentChoiceValue, mappedOptions, pcfContext.dependencyMappingService, 
       isMultiSelect, selectedKey, selectedKeys]);
@@ -256,7 +234,6 @@ export const DependentChoiceControl: React.FC<IDependentChoiceAppProps> = (
       setSelectedKeys(newSelected);
       const numericValues = newSelected.map((val) => Number(val));
       props.onChange(numericValues);
-      console.log("Multi-select chosen options:", newSelected);
     } else {
       const newSelected =
         data?.selectedOptions && data.selectedOptions.length > 0
@@ -265,7 +242,6 @@ export const DependentChoiceControl: React.FC<IDependentChoiceAppProps> = (
       setSelectedKey(newSelected);
       const numericValue = newSelected !== "" ? Number(newSelected) : null;
       props.onChange(numericValue);
-      console.log("Single-select chosen option:", newSelected);
     }
   };
 

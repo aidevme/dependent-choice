@@ -393,10 +393,6 @@ export class ConfigurationValidator {
     const result = this.validate(configJson);
 
     if (result.isValid) {
-      console.log(`${logPrefix}: Configuration is valid`);
-      if (result.configuration && result.configuration.mappings.length > 0) {
-        console.log(`${logPrefix}: Mappings count:`, result.configuration.mappings.length);
-      }
       return true;
     } else {
       console.error(`${logPrefix}: Configuration validation failed`);

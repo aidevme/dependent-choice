@@ -103,11 +103,9 @@ export class MetadataService {
     const cacheKey = `entity_${entityLogicalName}`;
     const cached = this.getFromCache<IEntityMetadata>(cacheKey);
     if (cached) {
-      console.log("MetadataService: Returning cached entity metadata for", entityLogicalName);
-      return cached;
+        return cached;
     }
 
-    console.log("MetadataService: Fetching entity metadata for", entityLogicalName);
     
     try {
       const result = await this.webAPI.retrieveMultipleRecords(
@@ -122,8 +120,7 @@ export class MetadataService {
       const entity = result.entities[0] as unknown as IEntityMetadata;
       this.setCache(cacheKey, entity);
       
-      console.log("MetadataService: Successfully retrieved entity metadata for", entityLogicalName);
-      return entity;
+        return entity;
     } catch (error) {
       console.error("MetadataService: Failed to retrieve entity metadata", error);
       throw error;
@@ -150,11 +147,9 @@ export class MetadataService {
     const cacheKey = `attribute_${entityLogicalName}_${attributeLogicalName}`;
     const cached = this.getFromCache<IAttributeMetadata>(cacheKey);
     if (cached) {
-      console.log("MetadataService: Returning cached attribute metadata for", attributeLogicalName);
-      return cached;
+        return cached;
     }
 
-    console.log("MetadataService: Fetching attribute metadata for", entityLogicalName, attributeLogicalName);
     
     try {
       // First get entity metadata to find the attribute
@@ -178,8 +173,7 @@ export class MetadataService {
       const attribute = attributes[0] as IAttributeMetadata;
       this.setCache(cacheKey, attribute);
       
-      console.log("MetadataService: Successfully retrieved attribute metadata for", attributeLogicalName);
-      return attribute;
+        return attribute;
     } catch (error) {
       console.error("MetadataService: Failed to retrieve attribute metadata", error);
       throw error;
@@ -206,11 +200,9 @@ export class MetadataService {
     const cacheKey = `optionset_${entityLogicalName}_${attributeLogicalName}`;
     const cached = this.getFromCache<IOptionSetMetadata>(cacheKey);
     if (cached) {
-      console.log("MetadataService: Returning cached option set metadata for", attributeLogicalName);
-      return cached;
+        return cached;
     }
 
-    console.log("MetadataService: Fetching option set metadata for", entityLogicalName, attributeLogicalName);
     
     try {
       const entityResult = await this.webAPI.retrieveMultipleRecords(
@@ -237,8 +229,7 @@ export class MetadataService {
 
       this.setCache(cacheKey, optionSet);
       
-      console.log("MetadataService: Successfully retrieved option set metadata with", optionSet.Options?.length ?? 0, "options");
-      return optionSet;
+        return optionSet;
     } catch (error) {
       console.error("MetadataService: Failed to retrieve option set metadata", error);
       throw error;
@@ -261,11 +252,9 @@ export class MetadataService {
     const cacheKey = `global_optionset_${optionSetName}`;
     const cached = this.getFromCache<IOptionSetMetadata>(cacheKey);
     if (cached) {
-      console.log("MetadataService: Returning cached global option set for", optionSetName);
-      return cached;
+        return cached;
     }
 
-    console.log("MetadataService: Fetching global option set metadata for", optionSetName);
     
     try {
       const result = await this.webAPI.retrieveMultipleRecords(
@@ -280,8 +269,7 @@ export class MetadataService {
       const optionSet = result.entities[0] as unknown as IOptionSetMetadata;
       this.setCache(cacheKey, optionSet);
       
-      console.log("MetadataService: Successfully retrieved global option set for", optionSetName);
-      return optionSet;
+        return optionSet;
     } catch (error) {
       console.error("MetadataService: Failed to retrieve global option set", error);
       throw error;
@@ -303,7 +291,6 @@ export class MetadataService {
    * @param key - The cache key to clear
    */
   public clearCacheKey(key: string): void {
-    console.log("MetadataService: Clearing cache for key", key);
     this.cache.delete(key);
     this.cacheExpiry.delete(key);
   }
@@ -337,3 +324,4 @@ export class MetadataService {
     this.cacheExpiry.set(key, Date.now() + this.CACHE_DURATION_MS);
   }
 }
+

@@ -38,8 +38,7 @@ export class DependencyMappingService {
    * ```
    */
   public initialize(configJson: string | null): void {
-    console.log("DependencyMappingService: initialize called with:", configJson);
-    
+
     if (!configJson) {
       console.warn("DependencyMappingService: No configuration provided");
       this.configuration = null;
