@@ -1,4 +1,8 @@
-# DependentChoice PCF Control
+<div align="center">
+  <img src="DependentChoice/img/dependent-choice-github-social-preview.png" alt="DependentChoice - PCF Control for Power Apps" width="100%">
+</div>
+
+<br>
 
 A Power Apps Component Framework (PCF) control that provides dynamic filtering for dependent choice/option set fields in Dynamics 365 and Power Apps. Built with React 16.14 and Fluent UI v9.
 
@@ -209,24 +213,25 @@ pac pcf push --publisher-prefix aidevme
 
 ```
 dependent-choice/
-├── DependentChoice/
+├── DependentChoice/                                  # Main control directory
 │   ├── components/
-│   │   ├── DependentChoice.tsx                        # Main React component
+│   │   ├── DependentChoice.tsx                       # Main React component
 │   │   └── DependentChoiceConfigurationErrorDialog.tsx # Error dialog component
+│   ├── generated/
+│   │   └── ManifestTypes.d.ts                        # Auto-generated TypeScript types
+│   ├── hooks/
+│   │   └── useTranslation.ts                         # Translation hook for components
 │   ├── services/
-│   │   ├── index.ts                                   # Service exports
-│   │   ├── ChoiceService/
-│   │   │   └── ChoiceService.ts                       # WebAPI metadata service
+│   │   ├── index.ts                                  # Service exports
 │   │   ├── DependencyMappingService/
-│   │   │   └── DependencyMappingService.ts            # Filtering logic
+│   │   │   └── DependencyMappingService.ts           # Filtering logic
 │   │   ├── MetadataService/
-│   │   │   └── MetadataService.ts                     # Dataverse metadata retrieval
+│   │   │   └── MetadataService.ts                    # Dataverse metadata retrieval
 │   │   └── PcfContextService/
-│   │       ├── PcfContext.tsx                         # React context provider
-│   │       └── PcfContextService.ts                   # PCF context wrapper
+│   │       ├── PcfContext.tsx                        # React context provider
+│   │       └── PcfContextService.ts                  # PCF context wrapper
 │   ├── statics/
-│   │   ├── configurationParameters.json               # Example configuration
-│   │   └── mockChoices.json                          # Mock data for testing
+│   │   ├── configurationParameters.json              # Example configuration
 │   ├── strings/                                      # Localization files (18 languages)
 │   │   ├── DependentChoice.1029.resx                 # Czech
 │   │   ├── DependentChoice.1030.resx                 # Danish
@@ -247,17 +252,44 @@ dependent-choice/
 │   │   ├── DependentChoice.2070.resx                 # Portuguese (Portugal)
 │   │   └── DependentChoice.3082.resx                 # Spanish (Spain)
 │   ├── styles/
-│   │   └── Styles.ts                                 # Fluent UI styles
+│   │   └── Styles.ts                                 # Fluent UI styles & hooks
+│   ├── tools/
+│   │   ├── ConfigurationValidator.ts                 # JSON configuration validator
+│   │   └── index.ts                                  # Tool exports
 │   ├── ControlManifest.Input.xml                     # PCF manifest
+│   ├── DependentChoice.pcfproj                       # MSBuild project file
 │   ├── DependentChoiceApp.tsx                        # React app wrapper
 │   └── index.ts                                      # PCF control entry point
 ├── Solution/                                         # Dataverse solution
+│   └── DependentChoiceSolution/
+│       ├── src/                                      # Solution files
+│       │   └── Other/
+│       │       ├── Customizations.xml
+│       │       ├── Relationships.xml
+│       │       └── Solution.xml
+│       └── DependentChoiceSolution.cdsproj           # CDS solution project
+├── docs/                                             # Documentation
+│   ├── api/                                          # API documentation (TypeDoc)
+│   ├── blog/                                         # Development blog posts
+│   └── todos/                                        # Research & planning docs
 ├── .github/
+│   ├── ISSUE_TEMPLATE/                               # GitHub issue templates
+│   ├── prompts/                                      # AI prompts & documentation
+│   ├── workflows/                                    # GitHub Actions CI/CD
 │   └── copilot-instructions.md                       # Development guidelines
-├── eslint.config.mjs                                 # ESLint configuration
+├── out/                                              # Build output directory
+├── obj/                                              # Intermediate build files
+├── dependent-choice.pcfproj                          # Root MSBuild project
+├── eslint.config.mjs                                 # ESLint flat configuration
+├── featureconfig.json                                # PCF feature configuration
 ├── package.json                                      # npm dependencies
 ├── pcfconfig.json                                    # PCF build configuration
-└── tsconfig.json                                     # TypeScript configuration
+├── tsconfig.json                                     # TypeScript configuration
+├── typedoc.json                                      # TypeDoc documentation config
+├── CONTRIBUTING.md                                   # Contribution guidelines
+├── LICENSE                                           # MIT License
+├── README.md                                         # This file
+└── SECURITY.md                                       # Security policy
 ```
 
 ## 🔍 How It Works

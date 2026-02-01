@@ -8,42 +8,9 @@ import {
   DialogContent,
   DialogActions,
   Button,
-  makeStyles,
-  tokens,
 } from "@fluentui/react-components";
-
-const useDependentChoiceConfigurationErrorDialogStyles = makeStyles({
-  icon: {
-    color: tokens.colorStatusDangerForeground1,
-    marginRight: tokens.spacingHorizontalS,
-    verticalAlign: "middle",
-  },
-  description: {
-    marginBottom: tokens.spacingVerticalM,
-  },
-  errorList: {
-    margin: "0",
-    paddingLeft: tokens.spacingHorizontalXL,
-  },
-  errorItem: {
-    marginBottom: tokens.spacingVerticalS,
-    color: tokens.colorPaletteRedForeground1,
-  },
-  formatContainer: {
-    marginTop: tokens.spacingVerticalL,
-    padding: tokens.spacingVerticalM,
-    backgroundColor: tokens.colorNeutralBackground2,
-    borderRadius: tokens.borderRadiusMedium,
-  },
-  codeBlock: {
-    margin: `${tokens.spacingVerticalS} 0 0 0`,
-    padding: tokens.spacingVerticalS,
-    backgroundColor: tokens.colorNeutralBackground1,
-    borderRadius: tokens.borderRadiusMedium,
-    fontSize: tokens.fontSizeBase200,
-    overflow: "auto",
-  },
-});
+import { useDependentChoiceConfigurationErrorDialogStyles } from "../styles/Styles";
+import { useTranslation } from "../hooks/useTranslation";
 
 export interface IDependentChoiceConfigurationErrorDialogProps {
   /** Whether the dialog is open */
@@ -52,9 +19,6 @@ export interface IDependentChoiceConfigurationErrorDialogProps {
   errors: string[];
   /** Callback when dialog is dismissed */
   onDismiss: () => void;
-  /** PCF context for accessing resource strings */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  context: ComponentFramework.Context<any>;
 }
 
 /**
@@ -63,14 +27,16 @@ export interface IDependentChoiceConfigurationErrorDialogProps {
  * @remarks
  * This dialog is shown when the configurationParameters property contains
  * invalid JSON or doesn't match the expected structure.
+ * Uses the useTranslation hook to access localized resource strings.
  */
 export const DependentChoiceConfigurationErrorDialog: React.FC<IDependentChoiceConfigurationErrorDialogProps> = (props) => {
   const styles = useDependentChoiceConfigurationErrorDialogStyles();
+  const { getString } = useTranslation();
   
-  const dialogTitle = props.context.resources.getString("dependent-choice-configuration-error-dialog-title");
-  const dialogMessage = props.context.resources.getString("dependent-choice-configuration-error-dialog-message");
-  const expectedFormatLabel = props.context.resources.getString("dependent-choice-configuration-error-dialog-expected-format-label");
-  const dialogOkButton = props.context.resources.getString("dependent-choice-configuration-error-dialog-ok-button");
+  const dialogTitle = getString("dependent-choice-configuration-error-dialog-title");
+  const dialogMessage = getString("dependent-choice-configuration-error-dialog-message");
+  const expectedFormatLabel = getString("dependent-choice-configuration-error-dialog-expected-format-label");
+  const dialogOkButton = getString("dependent-choice-configuration-error-dialog-ok-button");
   
   return (
     <Dialog 

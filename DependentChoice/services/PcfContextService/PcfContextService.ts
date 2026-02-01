@@ -151,7 +151,6 @@ export class PcfContextService {
     try {
       const entityName = this.getEntityTypeName();
       // @ts-expect-error - LogicalName exists but not in types
-      // eslint-disable-next-line 
       const attributeName: string = this.context.parameters.dependentChoice.attributes?.LogicalName;
       
       if (!entityName || !attributeName) {
@@ -176,7 +175,6 @@ export class PcfContextService {
     try {
       const entityName = this.getEntityTypeName();
       // @ts-expect-error - LogicalName exists but not in types
-      // eslint-disable-next-line 
       const attributeName: string = this.context.parameters.parentChoice.attributes?.LogicalName;
       
       if (!entityName || !attributeName) {

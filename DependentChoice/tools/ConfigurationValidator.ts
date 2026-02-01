@@ -76,18 +76,47 @@ export class ConfigurationValidator {
    * ```
    */
   public static validate(configJson: string | null | undefined): IValidationResult {
-    const errors: string[] = [];
+    // Check for null, undefined, or empty input
+    const inputResult = this.validateInput(configJson);
+    if (inputResult) {
+      return inputResult;
+    }
 
-    // Check if null or undefined
+    // Parse JSON
+    const parseResult = this.parseJson(configJson!);
+    if (parseResult.errors.length > 0) {
+      return { isValid: false, errors: parseResult.errors };
+    }
+
+    // Validate root structure
+    const structureResult = this.validateRootStructure(parseResult.parsed);
+    if (structureResult.errors.length > 0) {
+      return { isValid: false, errors: structureResult.errors };
+    }
+
+    // Validate mappings array
+    const mappingsResult = this.validateMappings(structureResult.config.mappings as unknown[]);
+
+    return mappingsResult.errors.length > 0
+      ? { isValid: false, errors: mappingsResult.errors }
+      : { isValid: true, errors: [], configuration: { mappings: mappingsResult.validatedMappings } };
+  }
+
+  /**
+   * Validates input for null, undefined, or empty values.
+   * 
+   * @param configJson - Input to validate
+   * @returns Validation result if input is null/empty, null otherwise
+   */
+  private static validateInput(configJson: string | null | undefined): IValidationResult | null {
     if (configJson === null || configJson === undefined) {
       return {
-        isValid: true, // Empty configuration is valid (no mappings)
+        isValid: true,
         errors: [],
         configuration: { mappings: [] },
       };
     }
 
-    // Check if empty string
     if (configJson.trim() === "") {
       return {
         isValid: true,
@@ -96,139 +125,254 @@ export class ConfigurationValidator {
       };
     }
 
-    // Try to parse JSON
-    let parsed: unknown;
+    return null;
+  }
+
+  /**
+   * Parses JSON string.
+   * 
+   * @param configJson - JSON string to parse
+   * @returns Parsed object and errors array
+   */
+  private static parseJson(configJson: string): { parsed: unknown; errors: string[] } {
     try {
-      parsed = JSON.parse(configJson);
+      const parsed: unknown = JSON.parse(configJson);
+      return { parsed, errors: [] };
     } catch (error) {
-      errors.push(`Invalid JSON format: ${error instanceof Error ? error.message : String(error)}`);
       return {
-        isValid: false,
-        errors,
+        parsed: null,
+        errors: [`Invalid JSON format: ${error instanceof Error ? error.message : String(error)}`],
       };
     }
+  }
 
-    // Check if parsed result is an object
+  /**
+   * Validates root structure of parsed configuration.
+   * 
+   * @param parsed - Parsed JSON object
+   * @returns Configuration object and errors array
+   */
+  private static validateRootStructure(parsed: unknown): { config: Record<string, unknown>; errors: string[] } {
+    const errors: string[] = [];
+
     if (typeof parsed !== "object" || parsed === null || Array.isArray(parsed)) {
       errors.push("Configuration must be a JSON object, not an array or primitive value");
-      return {
-        isValid: false,
-        errors,
-      };
+      return { config: {}, errors };
     }
 
     const config = parsed as Record<string, unknown>;
 
-    // Check if "mappings" property exists
     if (!("mappings" in config)) {
       errors.push('Configuration must have a "mappings" property');
-      return {
-        isValid: false,
-        errors,
-      };
+      return { config: {}, errors };
     }
 
-    // Validate mappings is an array
     if (!Array.isArray(config.mappings)) {
       errors.push('"mappings" must be an array');
-      return {
-        isValid: false,
-        errors,
-      };
+      return { config: {}, errors };
     }
 
-    // Validate each mapping
+    return { config, errors };
+  }
+
+  /**
+   * Validates all mappings in the configuration.
+   * 
+   * @param mappings - Array of mapping objects to validate
+   * @returns Validated mappings and errors array
+   */
+  private static validateMappings(mappings: unknown[]): {
+    validatedMappings: IDependencyMapping[];
+    errors: string[];
+  } {
+    const errors: string[] = [];
     const validatedMappings: IDependencyMapping[] = [];
     const parentValues = new Set<number>();
 
-    for (let i = 0; i < config.mappings.length; i++) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const mapping = config.mappings[i];
+    for (let i = 0; i < mappings.length; i++) {
+      const mappingResult = this.validateSingleMapping(mappings[i], i, parentValues);
+      errors.push(...mappingResult.errors);
 
-      // Check if mapping is an object
-      if (typeof mapping !== "object" || mapping === null || Array.isArray(mapping)) {
-        errors.push(`Mapping at index ${i} must be an object`);
-        continue;
+      if (mappingResult.mapping) {
+        validatedMappings.push(mappingResult.mapping);
       }
-
-      const mappingObj = mapping as Record<string, unknown>;
-
-      // Validate parentValue
-      if (!("parentValue" in mappingObj)) {
-        errors.push(`Mapping at index ${i} is missing "parentValue" property`);
-        continue;
-      }
-
-      if (typeof mappingObj.parentValue !== "number" || isNaN(mappingObj.parentValue)) {
-        errors.push(`Mapping at index ${i} has invalid "parentValue": must be a number`);
-        continue;
-      }
-
-      const parentValue = mappingObj.parentValue;
-
-      // Check for duplicate parent values
-      if (parentValues.has(parentValue)) {
-        errors.push(`Duplicate parentValue ${parentValue} found at index ${i}`);
-        continue;
-      }
-      parentValues.add(parentValue);
-
-      // Validate dependentValues
-      if (!("dependentValues" in mappingObj)) {
-        errors.push(`Mapping at index ${i} is missing "dependentValues" property`);
-        continue;
-      }
-
-      if (!Array.isArray(mappingObj.dependentValues)) {
-        errors.push(`Mapping at index ${i} has invalid "dependentValues": must be an array`);
-        continue;
-      }
-
-      // Validate each dependent value
-      const dependentValues: number[] = [];
-      let hasInvalidElement = false;
-
-      for (let j = 0; j < mappingObj.dependentValues.length; j++) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        const element = mappingObj.dependentValues[j];
-        if (typeof element !== "number" || isNaN(element)) {
-          errors.push(`Mapping at index ${i}, dependentValues[${j}]: "${String(element)}" is not a number`);
-          hasInvalidElement = true;
-        } else {
-          dependentValues.push(element);
-        }
-      }
-
-      if (hasInvalidElement) {
-        continue;
-      }
-
-      // Check for duplicates in dependentValues
-      const uniqueValues = new Set(dependentValues);
-      if (uniqueValues.size !== dependentValues.length) {
-        const duplicates = dependentValues.filter((val, idx) => dependentValues.indexOf(val) !== idx);
-        errors.push(`Mapping at index ${i} has duplicate dependentValues: [${duplicates.join(", ")}]`);
-      }
-
-      validatedMappings.push({
-        parentValue,
-        dependentValues,
-      });
     }
 
-    // Return result
-    if (errors.length > 0) {
-      return {
-        isValid: false,
-        errors,
-      };
+    return { validatedMappings, errors };
+  }
+
+  /**
+   * Validates a single mapping object.
+   * 
+   * @param mapping - Mapping object to validate
+   * @param index - Index of mapping in array
+   * @param parentValues - Set of already seen parent values for duplicate detection
+   * @returns Validated mapping and errors array
+   */
+  private static validateSingleMapping(
+    mapping: unknown,
+    index: number,
+    parentValues: Set<number>
+  ): { mapping?: IDependencyMapping; errors: string[] } {
+    const errors: string[] = [];
+
+    if (typeof mapping !== "object" || mapping === null || Array.isArray(mapping)) {
+      errors.push(`Mapping at index ${index} must be an object`);
+      return { errors };
+    }
+
+    const mappingObj = mapping as Record<string, unknown>;
+
+    // Validate parent value
+    const parentValueResult = this.validateParentValue(mappingObj, index, parentValues);
+    errors.push(...parentValueResult.errors);
+
+    if (parentValueResult.parentValue === undefined) {
+      return { errors };
+    }
+
+    // Validate dependent values
+    const dependentValuesResult = this.validateDependentValues(mappingObj, index);
+    errors.push(...dependentValuesResult.errors);
+
+    if (dependentValuesResult.dependentValues === undefined) {
+      return { errors };
     }
 
     return {
-      isValid: true,
-      errors: [],
-      configuration: { mappings: validatedMappings },
+      mapping: {
+        parentValue: parentValueResult.parentValue,
+        dependentValues: dependentValuesResult.dependentValues,
+      },
+      errors,
     };
+  }
+
+  /**
+   * Validates parent value property of a mapping.
+   * 
+   * @param mappingObj - Mapping object
+   * @param index - Index of mapping in array
+   * @param parentValues - Set of already seen parent values
+   * @returns Parent value and errors array
+   */
+  private static validateParentValue(
+    mappingObj: Record<string, unknown>,
+    index: number,
+    parentValues: Set<number>
+  ): { parentValue?: number; errors: string[] } {
+    const errors: string[] = [];
+
+    if (!("parentValue" in mappingObj)) {
+      errors.push(`Mapping at index ${index} is missing "parentValue" property`);
+      return { errors };
+    }
+
+    if (typeof mappingObj.parentValue !== "number" || Number.isNaN(mappingObj.parentValue)) {
+      errors.push(`Mapping at index ${index} has invalid "parentValue": must be a number`);
+      return { errors };
+    }
+
+    const parentValue = mappingObj.parentValue;
+
+    if (parentValues.has(parentValue)) {
+      errors.push(`Duplicate parentValue ${parentValue} found at index ${index}`);
+      return { errors };
+    }
+
+    parentValues.add(parentValue);
+    return { parentValue, errors };
+  }
+
+  /**
+   * Validates dependent values array of a mapping.
+   * 
+   * @param mappingObj - Mapping object
+   * @param index - Index of mapping in array
+   * @returns Dependent values array and errors array
+   */
+  private static validateDependentValues(
+    mappingObj: Record<string, unknown>,
+    index: number
+  ): { dependentValues?: number[]; errors: string[] } {
+    const errors: string[] = [];
+
+    if (!("dependentValues" in mappingObj)) {
+      errors.push(`Mapping at index ${index} is missing "dependentValues" property`);
+      return { errors };
+    }
+
+    if (!Array.isArray(mappingObj.dependentValues)) {
+      errors.push(`Mapping at index ${index} has invalid "dependentValues": must be an array`);
+      return { errors };
+    }
+
+    const dependentValues: number[] = [];
+    const elementErrors = this.validateDependentValuesElements(mappingObj.dependentValues, index, dependentValues);
+    errors.push(...elementErrors);
+
+    if (elementErrors.length > 0) {
+      return { errors };
+    }
+
+    // Check for duplicates
+    const duplicateErrors = this.checkDuplicateDependentValues(dependentValues, index);
+    errors.push(...duplicateErrors);
+
+    return { dependentValues, errors };
+  }
+
+  /**
+   * Validates individual elements in dependent values array.
+   * 
+   * @param dependentValues - Array to validate
+   * @param index - Index of parent mapping
+   * @param validValues - Array to populate with valid values
+   * @returns Errors array
+   */
+  private static validateDependentValuesElements(
+    dependentValues: unknown[],
+    index: number,
+    validValues: number[]
+  ): string[] {
+    const errors: string[] = [];
+
+    for (let j = 0; j < dependentValues.length; j++) {
+      const element = dependentValues[j];
+      if (typeof element !== "number" || Number.isNaN(element)) {
+        errors.push(`Mapping at index ${index}, dependentValues[${j}]: "${String(element)}" is not a number`);
+      } else {
+        validValues.push(element);
+      }
+    }
+
+    return errors;
+  }
+
+  /**
+   * Checks for duplicate values in dependent values array.
+   * 
+   * @param dependentValues - Array to check
+   * @param index - Index of parent mapping
+   * @returns Errors array
+   */
+  private static checkDuplicateDependentValues(dependentValues: number[], index: number): string[] {
+    const uniqueValues = new Set(dependentValues);
+    if (uniqueValues.size !== dependentValues.length) {
+      const duplicates = this.findDuplicates(dependentValues);
+      return [`Mapping at index ${index} has duplicate dependentValues: [${duplicates.join(", ")}]`];
+    }
+    return [];
+  }
+
+  /**
+   * Finds duplicate values in an array.
+   * 
+   * @param values - Array to check
+   * @returns Array of duplicate values
+   */
+  private static findDuplicates(values: number[]): number[] {
+    return values.filter((val, idx) => values.indexOf(val) !== idx);
   }
 
   /**

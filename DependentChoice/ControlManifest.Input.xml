@@ -30,8 +30,7 @@
       <resx path="strings/DependentChoice.1038.resx" version="1.0.0"/>
       <resx path="strings/DependentChoice.1066.resx" version="1.0.0"/>
       <resx path="strings/DependentChoice.1042.resx" version="1.0.0"/>
-      <resx path="strings/DependentChoice.1041.resx" version="1.0.0"/>
-      <resx path="strings/DependentChoice.4.resx" version="1.0.0"/>
+      <resx path="strings/DependentChoice.1041.resx" version="1.0.0"/>     
     </resources>
     <feature-usage>
       <uses-feature name="Utility" required="true"/>

@@ -63,7 +63,6 @@ export const DependentChoiceApp: React.FC<IDependentChoiceAppProps> = (props) =>
             isOpen={showErrorDialog}
             errors={configErrors}
             onDismiss={() => setShowErrorDialog(false)}
-            context={props.context}
           />
         </FluentProvider>
       </IdPrefixProvider>
