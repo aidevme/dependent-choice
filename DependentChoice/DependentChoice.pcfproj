@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.PowerPlatform.PowerApps.Sdk/1.*">
   <PropertyGroup>
     <PowerAppsTargetsPath>$(MSBuildExtensionsPath)\Microsoft\PowerPlatform\PowerApps</PowerAppsTargetsPath>
+    <PcfBuildMode>production</PcfBuildMode>
   </PropertyGroup>
 
   <ItemGroup>

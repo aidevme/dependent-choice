@@ -49,8 +49,8 @@ jobs:
     - name: Check for build warnings
       if: always()
       run: |
-        if (Test-Path "out/controls/DependentChoice.js") {
-          Write-Host "✓ Build successful - DependentChoice.js created"
+        if (Test-Path "out/controls/DependentChoice/bundle.js") {
+          Write-Host "✓ Build successful - bundle.js created"
         } else {
           Write-Error "✗ Build failed - output files not found"
           exit 1

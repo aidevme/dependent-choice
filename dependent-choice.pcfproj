@@ -11,6 +11,7 @@
     <Name>dependent-choice</Name>
     <ProjectGuid>53e52994-42e8-457d-925a-b014398c6604</ProjectGuid>
     <OutputPath>$(MSBuildThisFileDirectory)out\controls</OutputPath>
+    <PcfBuildMode>production</PcfBuildMode>
   </PropertyGroup>
 
   <PropertyGroup>
