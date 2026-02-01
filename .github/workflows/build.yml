@@ -62,8 +62,8 @@ jobs:
         # Clear existing content (keep .git)
         Get-ChildItem -Exclude .git | Remove-Item -Recurse -Force
         
-        # Copy generated docs
-        Copy-Item -Path ../docs/* -Destination . -Recurse -Force
+        # Copy generated API docs only
+        Copy-Item -Path ../docs/api/* -Destination . -Recurse -Force
         
         # Commit and push if there are changes
         git add .
