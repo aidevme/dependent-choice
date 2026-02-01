@@ -55,6 +55,8 @@ jobs:
           git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/aidevme/dependent-choice.wiki.git
         } else {
           cd wiki
+          # Update remote URL to use token
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/aidevme/dependent-choice.wiki.git
         }
         
         # Clear existing content (keep .git)
