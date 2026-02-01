@@ -37,6 +37,22 @@ jobs:
     - name: Generate TSDoc documentation
       run: npm run docs
       
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+      
+    - name: Restore solution dependencies
+      run: msbuild /t:restore Solution/DependentChoiceSolution/DependentChoiceSolution.cdsproj
+      
+    - name: Build solution (Managed & Unmanaged)
+      run: msbuild /p:Configuration=Release Solution/DependentChoiceSolution/DependentChoiceSolution.cdsproj
+      
+    - name: List solution artifacts
+      run: |
+        Write-Host "=== Solution Build Output ==="
+        Get-ChildItem -Path Solution/DependentChoiceSolution/bin/Release -Recurse -Filter "*.zip" | ForEach-Object {
+          Write-Host "Found: $($_.FullName) ($([math]::Round($_.Length / 1KB, 2)) KB)"
+        }
+      
     # - name: Deploy documentation to Wiki
     #   if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     #   env:
@@ -101,3 +117,82 @@ jobs:
           Write-Error "✗ Build failed - output files not found"
           exit 1
         }
+        
+    - name: Create GitHub Release
+      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        # Extract version from manifest
+        [xml]$manifest = Get-Content "DependentChoice/ControlManifest.Input.xml"
+        $version = $manifest.manifest.control.version
+        $tag = "v$version"
+        
+        Write-Host "Creating release for version $version"
+        
+        # Find solution files
+        $managedZip = Get-ChildItem -Path "Solution/DependentChoiceSolution/bin/Release" -Filter "*_managed.zip" -Recurse | Select-Object -First 1
+        $unmanagedZip = Get-ChildItem -Path "Solution/DependentChoiceSolution/bin/Release" -Filter "*.zip" -Exclude "*_managed.zip" -Recurse | Select-Object -First 1
+        
+        if (-not $managedZip -or -not $unmanagedZip) {
+          Write-Error "Solution files not found"
+          exit 1
+        }
+        
+        Write-Host "Managed: $($managedZip.FullName)"
+        Write-Host "Unmanaged: $($unmanagedZip.FullName)"
+        
+        # Check if release already exists
+        gh release view $tag 2>$null
+        if ($LASTEXITCODE -eq 0) {
+          Write-Host "Release $tag already exists, deleting..."
+          gh release delete $tag --yes
+          git push origin :refs/tags/$tag 2>$null
+        }
+        
+        # Create release notes
+        $releaseNotes = @"
+        ## DependentChoice PCF Control v$version
+        
+        ### 📦 Installation
+        
+        Download the solution file and import it into your Power Platform environment:
+        
+        - **Managed Solution** (recommended for production): ``DependentChoiceSolution_managed.zip``
+        - **Unmanaged Solution** (for development): ``DependentChoiceSolution.zip``
+        
+        ### ✨ Features
+        
+        - **Dependent Choice Fields**: Configure cascading option sets with parent-child relationships
+        - **Multi-Language Support**: 18 languages fully supported
+        - **Fluent UI Design**: Modern, accessible interface matching Power Apps theming
+        - **Performance Optimized**: 138 KiB bundle size (83.7% reduction from initial build)
+        - **TypeScript**: Full type safety and IntelliSense support
+        
+        ### 📚 Documentation
+        
+        - [API Documentation](https://github.com/aidevme/dependent-choice/wiki)
+        - [Configuration Guide](https://github.com/aidevme/dependent-choice#configuration)
+        - [Blog Article](https://github.com/aidevme/dependent-choice/blob/master/docs/blog/dependent-choice-blog-article.md)
+        
+        ### 🔧 Bundle Information
+        
+        - **Bundle Size**: 138 KiB (minified)
+        - **React Version**: 16.14.0
+        - **Fluent UI Version**: 9.68.0
+        - **Build Mode**: Production (Terser minified)
+        
+        ---
+        
+        **Full Changelog**: https://github.com/aidevme/dependent-choice/commits/master
+        "@
+        
+        # Create release
+        gh release create $tag `
+          --title "DependentChoice Control v$version" `
+          --notes $releaseNotes `
+          --target master `
+          $managedZip.FullName `
+          $unmanagedZip.FullName
+        
+        Write-Host "✓ Release $tag created successfully"
