@@ -81,7 +81,8 @@ export class PcfContextService {
    * @returns true if field has security applied
    */
   public isFieldSecured(): boolean {
-    return this.context.parameters.dependentChoice?.security?.secured ?? false;
+    const security = this.context.parameters?.dependentChoice?.security;
+    return security?.secured ?? false;
   }
 
   /**
@@ -89,7 +90,8 @@ export class PcfContextService {
    * @returns true if user has read permission
    */
   public canReadField(): boolean {
-    return this.context.parameters.dependentChoice?.security?.readable ?? true;
+    const security = this.context.parameters?.dependentChoice?.security;
+    return security?.readable ?? true;
   }
 
   /**
@@ -97,7 +99,8 @@ export class PcfContextService {
    * @returns true if user has edit permission
    */
   public canEditField(): boolean {
-    return this.context.parameters.dependentChoice?.security?.editable ?? true;
+    const security = this.context.parameters?.dependentChoice?.security;
+    return security?.editable ?? true;
   }
 
   /**
