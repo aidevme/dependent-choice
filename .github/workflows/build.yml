@@ -65,15 +65,13 @@ jobs:
         
         # Commit and push if there are changes
         git add .
-        $hasChanges = git diff --staged --quiet; $LASTEXITCODE -ne 0
-        if ($hasChanges) {
+        git diff --staged --quiet
+        if ($LASTEXITCODE -ne 0) {
           git commit -m "docs: Update API documentation from commit ${{ github.sha }}"
           git push origin master
           Write-Host "✓ Documentation deployed to wiki"
-          exit 0
         } else {
           Write-Host "✓ No documentation changes detected"
-          exit 0
         }
       
     - name: Upload build artifacts
