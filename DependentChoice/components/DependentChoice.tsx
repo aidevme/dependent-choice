@@ -5,8 +5,8 @@ import {
   Dropdown,
   Option,
   Tooltip,
+  type DropdownProps
 } from "@fluentui/react-components";
-import type { DropdownProps } from "@fluentui/react-components";
 import { useDependentChoiceStyles } from "../styles/Styles"
 import { IDependentChoiceAppProps } from "../DependentChoiceApp";
 

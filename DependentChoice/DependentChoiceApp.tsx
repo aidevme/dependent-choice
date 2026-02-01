@@ -1,6 +1,6 @@
 // DependentChoice\DependentChoiceApp.tsx
 import * as React from "react";
-import { IdPrefixProvider, FluentProvider, webLightTheme} from "@fluentui/react-components";
+import { IdPrefixProvider, FluentProvider } from "@fluentui/react-components";
 import { PcfContextProvider } from "./services/PcfContextService/PcfContext";
 import { PcfContextService, IPcfContextServiceProps } from "./services/PcfContextService/PcfContextService";
 import { useDependentChoiceStyles } from "./styles/Styles"
@@ -46,8 +46,8 @@ export const DependentChoiceApp: React.FC<IDependentChoiceAppProps> = (props) =>
     configurationParameters: props.configurationParameters
   });
   
-  // Use webLightTheme when running locally (in design mode), otherwise use the context theme
-  const theme = pcfContextService.inDesignMode() ? webLightTheme : pcfContextService.theme;
+  // Use the PCF context theme (works in both runtime and design mode)
+  const theme = pcfContextService.theme;
 
   // Don't render the control if it's not visible
   if (!pcfContextService.isVisible()) {
