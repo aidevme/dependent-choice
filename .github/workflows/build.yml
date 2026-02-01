@@ -36,6 +36,10 @@ jobs:
     - name: Build PCF control
       run: npm run build
       
+    - name: Generate TSDoc documentation
+      if: matrix.node-version == '18.x'
+      run: npm run docs
+      
     - name: Upload build artifacts
       if: matrix.node-version == '18.x'
       uses: actions/upload-artifact@v4
@@ -45,6 +49,14 @@ jobs:
           out/
           !out/**/*.map
         retention-days: 30
+        
+    - name: Upload documentation
+      if: matrix.node-version == '18.x'
+      uses: actions/upload-artifact@v4
+      with:
+        name: tsdoc-documentation
+        path: docs/
+        retention-days: 90
         
     - name: Check for build warnings
       if: always()
