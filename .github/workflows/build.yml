@@ -40,6 +40,22 @@ jobs:
       if: matrix.node-version == '18.x'
       run: npm run docs
       
+    - name: Deploy documentation to Wiki
+      if: matrix.node-version == '18.x' && github.event_name == 'push' && github.ref == 'refs/heads/master'
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        
+        git clone https://${{ secrets.GITHUB_TOKEN }}@github.com/aidevme/dependent-choice.wiki.git wiki
+        
+        Remove-Item -Path wiki/* -Recurse -Force -Exclude .git
+        Copy-Item -Path docs/* -Destination wiki/ -Recurse -Force
+        
+        cd wiki
+        git add .
+        git diff --quiet && git diff --staged --quiet || git commit -m "docs: Update API documentation from commit ${{ github.sha }}"
+        git push
+      
     - name: Upload build artifacts
       if: matrix.node-version == '18.x'
       uses: actions/upload-artifact@v4
