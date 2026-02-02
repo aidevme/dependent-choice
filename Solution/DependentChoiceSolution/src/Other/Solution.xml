@@ -11,7 +11,7 @@
       <!-- Description of Cds Solution in language code -->
       <Description description="A Power Apps Component Framework (PCF) control that provides dynamic filtering for dependent choice/option set fields in Dynamics 365 and Power Apps. Built with React 16.14 and Fluent UI v9, supporting 18 languages with WebAPI-based metadata retrieval and JSON-based configuration." languagecode="1033" />
     </Descriptions>
-    <Version>1.0.0.16</Version>
+    <Version>1.0.0.17</Version>
     <!-- Solution Package Type: Unmanaged(0)/Managed(1)/Both(2)-->
     <Managed>2</Managed>
     <Publisher>

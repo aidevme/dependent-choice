@@ -247,8 +247,7 @@ export const DependentChoiceControl: React.FC<IDependentChoiceAppProps> = (
   };
 
   return (
-    <div>
-      <Label>Dependent Choice</Label>
+    <div>      
       <Tooltip content={displayText === "" ? selectText : displayText} relationship="label">
         <Dropdown        
           appearance="filled-darker"
