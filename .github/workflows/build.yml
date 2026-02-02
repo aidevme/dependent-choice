@@ -52,46 +52,7 @@ jobs:
         Get-ChildItem -Path Solution/DependentChoiceSolution/bin/Release -Recurse -Filter "*.zip" | ForEach-Object {
           Write-Host "Found: $($_.FullName) ($([math]::Round($_.Length / 1KB, 2)) KB)"
         }
-      
-    # - name: Deploy documentation to Wiki
-    #   if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-    #   env:
-    #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #   run: |
-    #     git config --global user.name "github-actions[bot]"
-    #     git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        
-    #     # Clone wiki using GitHub CLI authentication
-    #     gh repo clone aidevme/dependent-choice.wiki wiki 2>$null
-    #     if ($LASTEXITCODE -ne 0) {
-    #       Write-Host "Wiki repository doesn't exist yet. Creating initial wiki..."
-    #       New-Item -ItemType Directory -Force -Path wiki | Out-Null
-    #       cd wiki
-    #       git init
-    #       git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/aidevme/dependent-choice.wiki.git
-    #     } else {
-    #       cd wiki
-    #       # Update remote URL to use token
-    #       git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/aidevme/dependent-choice.wiki.git
-    #     }
-        
-    #     # Clear existing content (keep .git)
-    #     Get-ChildItem -Exclude .git | Remove-Item -Recurse -Force
-        
-    #     # Copy generated API docs only
-    #     Copy-Item -Path ../docs/api/* -Destination . -Recurse -Force
-        
-    #     # Commit and push if there are changes
-    #     git add .
-    #     git diff --staged --quiet
-    #     if ($LASTEXITCODE -ne 0) {
-    #       git commit -m "docs: Update API documentation from commit ${{ github.sha }}"
-    #       git push origin master
-    #       Write-Host "✓ Documentation deployed to wiki"
-    #     } else {
-    #       Write-Host "✓ No documentation changes detected"
-    #     }
-      
+       
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
