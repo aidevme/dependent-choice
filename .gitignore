@@ -24,3 +24,6 @@
 
 # generated documentation
 /docs/api
+
+*storybook.log
+storybook-static

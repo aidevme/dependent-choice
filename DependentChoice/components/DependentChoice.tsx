@@ -5,6 +5,7 @@ import {
   Dropdown,
   Option,
   Tooltip,
+  Label,
   type DropdownProps
 } from "@fluentui/react-components";
 import { useDependentChoiceStyles } from "../styles/Styles"
@@ -246,25 +247,28 @@ export const DependentChoiceControl: React.FC<IDependentChoiceAppProps> = (
   };
 
   return (
-    <Tooltip content={displayText === "" ? selectText : displayText} relationship="label">
-      <Dropdown        
-        appearance="filled-darker"
-        className={styles.root}
-        onOptionSelect={onOptionSelect}
-        multiselect={isMultiSelect}
-        selectedOptions={
-          isMultiSelect ? selectedKeys : selectedKey ? [selectedKey] : []
-        }        
-        disabled={isDisabled}
-        value={displayText}
-        placeholder="---" // <-- Use placeholder to show ---
-      >
-        {displayedOptions.map((opt) => (
-          <Option key={opt.key} value={opt.key.toString()}>
-            {opt.text}
-          </Option>
-        ))}
-      </Dropdown>
-    </Tooltip>
+    <div>
+      <Label>Dependent Choice</Label>
+      <Tooltip content={displayText === "" ? selectText : displayText} relationship="label">
+        <Dropdown        
+          appearance="filled-darker"
+          className={styles.root}
+          onOptionSelect={onOptionSelect}
+          multiselect={isMultiSelect}
+          selectedOptions={
+            isMultiSelect ? selectedKeys : selectedKey ? [selectedKey] : []
+          }        
+          disabled={isDisabled}
+          value={displayText}
+          placeholder="---" // <-- Use placeholder to show ---
+        >
+          {displayedOptions.map((opt) => (
+            <Option key={opt.key} value={opt.key.toString()}>
+              {opt.text}
+            </Option>
+          ))}
+        </Dropdown>
+      </Tooltip>
+    </div>
   );
 };
